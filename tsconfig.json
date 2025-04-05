@@ -8,7 +8,9 @@
       "@components": ["./components"],
       "@utils": ["./utils"],
       "@constants": ["./constants"],
-      "@screens": ["./screens"]
+      "@screens": ["./screens"],
+      "@store": ["./store"],
+      "@slice": ["./slice"]
     },
     "typeRoots": ["./types", "./node_modules/@types"]
   }
