@@ -1475,6 +1475,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@egjs/hammerjs@npm:^2.0.17":
+  version: 2.0.17
+  resolution: "@egjs/hammerjs@npm:2.0.17"
+  dependencies:
+    "@types/hammerjs": ^2.0.36
+  checksum: 8945137cec5837edd70af3f2e0ea621543eb0aa3b667e6269ec6485350f4d120c2434b37c7c30b1cf42a65275dd61c1f24626749c616696d3956ac0c008c4766
+  languageName: node
+  linkType: hard
+
 "@eslint-community/eslint-utils@npm:^4.2.0, @eslint-community/eslint-utils@npm:^4.4.0":
   version: 4.5.1
   resolution: "@eslint-community/eslint-utils@npm:4.5.1"
@@ -2658,6 +2667,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hammerjs@npm:^2.0.36":
+  version: 2.0.46
+  resolution: "@types/hammerjs@npm:2.0.46"
+  checksum: caba6ec788d19905c71092670b58514b3d1f5eee5382bf9205e8df688d51e7857b7994e2dd7aed57fac8977bdf0e456d67fbaf23440a4385b8ce25fe2af1ec39
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.6
   resolution: "@types/istanbul-lib-coverage@npm:2.0.6"
@@ -3710,7 +3726,10 @@ __metadata:
     react-native: 0.78.2
     react-native-config: ^1.5.5
     react-native-dotenv: ^3.4.11
+    react-native-gesture-handler: ^2.25.0
     react-native-maps: ^1.20.1
+    react-native-modalize: ^2.1.1
+    react-native-portalize: ^1.0.7
     react-native-safe-area-context: ^5.3.0
     react-native-screens: ^4.10.0
     react-native-size-matters: ^0.4.2
@@ -5446,7 +5465,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.3.2":
+"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -8132,6 +8151,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gesture-handler@npm:^2.25.0":
+  version: 2.25.0
+  resolution: "react-native-gesture-handler@npm:2.25.0"
+  dependencies:
+    "@egjs/hammerjs": ^2.0.17
+    hoist-non-react-statics: ^3.3.0
+    invariant: ^2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 51b155bcc56043b9e06bf8ded089c44348e8da297b38e73f203f2d6ce8bd51698f85a38dca8eeab3d2ab721aeddefc270acd99e16cf493b20f1f429ad02214b8
+  languageName: node
+  linkType: hard
+
 "react-native-maps@npm:^1.20.1":
   version: 1.20.1
   resolution: "react-native-maps@npm:1.20.1"
@@ -8145,6 +8178,27 @@ __metadata:
     react-native-web:
       optional: true
   checksum: 3451f2cb98a0cfcac973d73d8a5bd8bc3673490ca1b3c85f6bd54110028201a7cbbcffbac56ccb931acb31e02bca8aac5805269bc13e94d93bfef868035074a7
+  languageName: node
+  linkType: hard
+
+"react-native-modalize@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "react-native-modalize@npm:2.1.1"
+  peerDependencies:
+    react: "> 15.0.0"
+    react-native: "> 0.50.0"
+    react-native-gesture-handler: "> 1.0.0"
+  checksum: c383c79d9397d72e285b67eb8c50e0743037bb72f0d12dc5a743ae45d092a4aa87e6fba0cd8cb8bef4ce675ffe784adb24bc996c137b4a30d9b8a882e7610c30
+  languageName: node
+  linkType: hard
+
+"react-native-portalize@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "react-native-portalize@npm:1.0.7"
+  peerDependencies:
+    react: "> 15.0.0"
+    react-native: "> 0.50.0"
+  checksum: 93c728c086f52bae20a75c0932d718f553d3bcf6383d3f0bb3a2c37865f22a28a41dcbe02787cb88a708dc8423b69b71bcf8ee02421238805042eda595c271e0
   languageName: node
   linkType: hard
 

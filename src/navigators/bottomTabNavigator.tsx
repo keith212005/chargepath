@@ -25,7 +25,7 @@ export const BottomTabNavigator = () => {
       <Tab.Screen
         options={{
           headerShown: name === 'Map' ? false : true,
-          tabBarIcon: ({focused, size}) => {
+          tabBarIcon: ({focused, size, color}) => {
             switch (name) {
               case 'Map':
                 iconName = focused ? 'map' : 'map-outline';
@@ -45,6 +45,7 @@ export const BottomTabNavigator = () => {
                 iconType = 'ionicon';
                 break;
             }
+            console.log(colors.text);
 
             return (
               <Icon

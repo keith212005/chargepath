@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-chargepath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-chargepath.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1706634D7ADC46E2AC73788B /* UberMove-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D1B724B2589DB949D68FBA95 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		1706634D7ADC46E2AC73788B /* UberMove-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */; };
+		CB4E508DECB9492DA71C60DE /* UberMove-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 836FD6623519452C970AA029 /* UberMove-Regular.ttf */; };
 		CDF389483ADF4BC08C8E07E4 /* UberMove-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72CC1EC79A6D47E8BE55C297 /* UberMove-Light.ttf */; };
 		D16C5189BD1347DAB41BB113 /* UberMove-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E910BFBAAFCD4880B4E8A3D7 /* UberMove-Medium.ttf */; };
-		CB4E508DECB9492DA71C60DE /* UberMove-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 836FD6623519452C970AA029 /* UberMove-Regular.ttf */; };
+		D1B724B2589DB949D68FBA95 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,13 +45,13 @@
 		3B4392A12AC88292D35C810B /* Pods-chargepath.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chargepath.debug.xcconfig"; path = "Target Support Files/Pods-chargepath/Pods-chargepath.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-chargepath.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chargepath.release.xcconfig"; path = "Target Support Files/Pods-chargepath/Pods-chargepath.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-chargepath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chargepath.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		72CC1EC79A6D47E8BE55C297 /* UberMove-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Light.ttf"; path = "../src/assets/fonts/UberMove-Light.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = chargepath/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = chargepath/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		836FD6623519452C970AA029 /* UberMove-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Regular.ttf"; path = "../src/assets/fonts/UberMove-Regular.ttf"; sourceTree = "<group>"; };
+		867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Bold.ttf"; path = "../src/assets/fonts/UberMove-Bold.ttf"; sourceTree = "<group>"; };
+		E910BFBAAFCD4880B4E8A3D7 /* UberMove-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Medium.ttf"; path = "../src/assets/fonts/UberMove-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */ = {isa = PBXFileReference; name = "UberMove-Bold.ttf"; path = "../src/assets/fonts/UberMove-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		72CC1EC79A6D47E8BE55C297 /* UberMove-Light.ttf */ = {isa = PBXFileReference; name = "UberMove-Light.ttf"; path = "../src/assets/fonts/UberMove-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E910BFBAAFCD4880B4E8A3D7 /* UberMove-Medium.ttf */ = {isa = PBXFileReference; name = "UberMove-Medium.ttf"; path = "../src/assets/fonts/UberMove-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		836FD6623519452C970AA029 /* UberMove-Regular.ttf */ = {isa = PBXFileReference; name = "UberMove-Regular.ttf"; path = "../src/assets/fonts/UberMove-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +154,7 @@
 			sourceTree = "<group>";
 		};
 		DFF5BCC390424438BA109E31 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */,
 				72CC1EC79A6D47E8BE55C297 /* UberMove-Light.ttf */,
@@ -162,8 +162,8 @@
 				836FD6623519452C970AA029 /* UberMove-Regular.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
