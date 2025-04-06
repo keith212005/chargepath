@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React, {useRef, forwardRef, useImperativeHandle} from 'react';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
@@ -12,6 +13,8 @@ const ModalWrapperComponent = (
   ref: React.Ref<ModalWrapperRef>,
 ) => {
   const modalizeRef = useRef<Modalize>(null);
+  const theme = useTheme();
+  const {colors} = theme;
 
   useImperativeHandle(ref, () => ({
     open: () => modalizeRef.current?.open(),
@@ -20,7 +23,13 @@ const ModalWrapperComponent = (
 
   return (
     <Portal>
-      <Modalize ref={modalizeRef} {...props}>
+      <Modalize
+        ref={modalizeRef}
+        scrollViewProps={{bounces: false}}
+        modalStyle={{backgroundColor: colors.card}}
+        handlePosition="inside"
+        handleStyle={{backgroundColor: colors.text}}
+        {...props}>
         {props.children}
       </Modalize>
     </Portal>

@@ -38,14 +38,11 @@ export const MapScreen = () => {
           longitude: -122.4324,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
-        }}></MapView>
+        }}
+      />
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          padding: 20,
-        }}>
+      {/* FloatingButton Container */}
+      <View style={styles.floatingButtonContainer}>
         <FloatingButton
           iconName="layer-group"
           iconType="font-awesome-5"
@@ -64,11 +61,10 @@ export const MapScreen = () => {
           }}
         />
       </View>
+
+      {/* Modal Map Information */}
       <ModalWrapper
         ref={mapInfoRef}
-        scrollViewProps={{bounces: false}}
-        handlePosition="inside"
-        handleStyle={{backgroundColor: colors.text}}
         modalHeight={Dimensions.get('window').height - 70}
         HeaderComponent={<MapInfomationHeader ref={mapInfoRef} />}>
         <MapInformationBody />
@@ -84,5 +80,10 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  floatingButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
   },
 });
