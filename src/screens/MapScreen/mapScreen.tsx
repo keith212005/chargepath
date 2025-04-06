@@ -1,21 +1,29 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import MapView from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
   FloatingButton,
-  MapInformation,
-  MapInformationRef,
+  ModalWrapperRef,
+  ModalWrapper,
   NoInternetView,
 } from '@components';
 import {useAppSelector} from '@store';
-import {useCustomTheme} from '@hooks';
+
+import {useGlobalStyles} from '@utils';
+import {MapInfomationHeader} from './mapInformationHeader';
+import {MapInformationBody} from './mapInformationBody';
+import {useTheme} from '@react-navigation/native';
 
 export const MapScreen = () => {
   const insets = useSafeAreaInsets();
   const isOnline = useAppSelector(state => state?.network?.isOnline);
-  const {colors} = useCustomTheme();
-  const mapInfoRef = React.useRef<MapInformationRef>(null);
+  const theme = useTheme();
+  const {colors} = theme;
+  const mapInfoRef = React.useRef<ModalWrapperRef>(null);
+  const globalStyle = useGlobalStyles();
+  const currentTheme = useAppSelector(state => state.theme.currentTheme);
+  console.log('currentTheme>>>>>', currentTheme);
 
   if (!isOnline) {
     return <NoInternetView />;
@@ -56,7 +64,13 @@ export const MapScreen = () => {
           }}
         />
       </View>
-      <MapInformation ref={mapInfoRef} />
+      <ModalWrapper
+        ref={mapInfoRef}
+        scrollViewProps={{bounces: false}}
+        modalHeight={Dimensions.get('window').height - 70}
+        HeaderComponent={<MapInfomationHeader />}>
+        <MapInformationBody />
+      </ModalWrapper>
     </View>
   );
 };

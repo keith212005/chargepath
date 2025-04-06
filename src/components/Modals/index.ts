@@ -1,1 +1,1 @@
-export * from './MapInformation';
+export * from './ModalWrapper';

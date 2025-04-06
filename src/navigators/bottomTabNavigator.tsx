@@ -1,19 +1,17 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BookmarksScreen, MapScreen, MeScreen, TripsScreen} from '@screens';
 import {Icon} from '@rneui/themed';
-import {useAppSelector} from '@store';
-import {useCustomTheme} from '@hooks';
 import {useGlobalStyles} from '@utils';
+import {useTheme} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
-  const {colors} = useCustomTheme();
   const globalStyle = useGlobalStyles();
-  const isDark = useAppSelector(state => state.user.isDarkTheme);
-  console.log(colors);
+  const theme = useTheme();
+  const {colors} = theme;
 
   const renderTab = (
     name: string,
@@ -25,7 +23,7 @@ export const BottomTabNavigator = () => {
       <Tab.Screen
         options={{
           headerShown: name === 'Map' ? false : true,
-          tabBarIcon: ({focused, size, color}) => {
+          tabBarIcon: ({focused, size}) => {
             switch (name) {
               case 'Map':
                 iconName = focused ? 'map' : 'map-outline';

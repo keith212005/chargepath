@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LoginScreen} from '@screens';
 import {BottomTabNavigator} from './bottomTabNavigator';
-import {useNetworkStatus} from '@hooks';
+import {useNetworkStatus, useThemeListener} from '@hooks';
 import {useAppSelector} from '@store';
 import {LightTheme, MyDarkTheme} from '@constants';
 import {Host} from 'react-native-portalize';
@@ -14,11 +14,12 @@ const Stack = createNativeStackNavigator();
 
 export const AppContainer = () => {
   useNetworkStatus(); // starts network status listener
-  const isDark = useAppSelector(state => state.user.isDarkTheme);
+  useThemeListener(); // starts theme listener
+  const theme = useAppSelector(state => state.theme.currentTheme);
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer theme={isDark ? MyDarkTheme : LightTheme}>
+      <NavigationContainer theme={theme === 'dark' ? MyDarkTheme : LightTheme}>
         <Host>
           <Stack.Navigator
             initialRouteName="Home"
