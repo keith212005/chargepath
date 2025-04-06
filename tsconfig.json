@@ -10,7 +10,9 @@
       "@constants": ["./constants"],
       "@screens": ["./screens"],
       "@store": ["./store"],
-      "@slice": ["./slice"]
+      "@slice": ["./slice"],
+      "@assets": ["./assets"],
+      "@hooks": ["./hooks"]
     },
     "typeRoots": ["./types", "./node_modules/@types"]
   }

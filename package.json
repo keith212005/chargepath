@@ -5,14 +5,17 @@
   "scripts": {
     "android": "npx react-native run-android",
     "ios": "npx react-native run-ios --simulator='iPhone 16 Pro Max'",
+    "ios-device": "npx react-native run-ios --device 'ketan’s iPhone'",
     "lint": "eslint .",
     "start": "npx react-native start --reset-cache",
     "test": "jest",
     "pod": "cd ios && npx pod install && cd ..",
-    "gradle": "cd android && ./gradlew clean && cd .."
+    "gradle": "cd android && ./gradlew clean && cd ..",
+    "link-assets": "npx react-native-asset"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-native-community/netinfo": "^11.4.1",
     "@react-navigation/bottom-tabs": "^7.3.9",
     "@react-navigation/elements": "^2.3.7",
     "@react-navigation/native": "^7.1.5",
@@ -26,10 +29,10 @@
     "react-native-maps": "^1.20.1",
     "react-native-safe-area-context": "^5.3.0",
     "react-native-screens": "^4.10.0",
+    "react-native-size-matters": "^0.4.2",
     "react-native-vector-icons": "^10.2.0",
     "react-redux": "^9.2.0",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^3.1.0"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

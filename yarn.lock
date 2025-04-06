@@ -2166,6 +2166,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/netinfo@npm:^11.4.1":
+  version: 11.4.1
+  resolution: "@react-native-community/netinfo@npm:11.4.1"
+  peerDependencies:
+    react-native: ">=0.59"
+  checksum: d347ae522da6b8c045d6378754d4928bdf23cc85b74571b91fa8a03fa168bdac5e3c65eb97eac0dd0c7cbd20e782f99d41b090fb79ce7d815cbaf6fb5d1abe37
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.78.2":
   version: 0.78.2
   resolution: "@react-native/assets-registry@npm:0.78.2"
@@ -3678,6 +3687,7 @@ __metadata:
     "@react-native-community/cli": 15.0.1
     "@react-native-community/cli-platform-android": 15.0.1
     "@react-native-community/cli-platform-ios": 15.0.1
+    "@react-native-community/netinfo": ^11.4.1
     "@react-native/babel-preset": 0.78.2
     "@react-native/eslint-config": 0.78.2
     "@react-native/metro-config": 0.78.2
@@ -3703,11 +3713,11 @@ __metadata:
     react-native-maps: ^1.20.1
     react-native-safe-area-context: ^5.3.0
     react-native-screens: ^4.10.0
+    react-native-size-matters: ^0.4.2
     react-native-vector-icons: ^10.2.0
     react-redux: ^9.2.0
     react-test-renderer: 19.0.0
     redux-persist: ^6.0.0
-    redux-thunk: ^3.1.0
     typescript: 5.0.4
   languageName: unknown
   linkType: soft
@@ -8173,7 +8183,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-size-matters@npm:^0.4.0":
+"react-native-size-matters@npm:^0.4.0, react-native-size-matters@npm:^0.4.2":
   version: 0.4.2
   resolution: "react-native-size-matters@npm:0.4.2"
   peerDependencies:
