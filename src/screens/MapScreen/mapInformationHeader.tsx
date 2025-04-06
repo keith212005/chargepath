@@ -1,14 +1,20 @@
 import {ModalWrapperRef} from '@components';
 import {useTheme} from '@react-navigation/native';
 import {useGlobalStyles} from '@utils';
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {View, Text, Pressable} from 'react-native';
 
-export const MapInfomationHeader = () => {
+// If you want to allow future props, define them here
+type MapInformationHeaderProps = {};
+
+export const MapInfomationHeader = forwardRef<
+  ModalWrapperRef,
+  MapInformationHeaderProps
+>((_props, ref) => {
   const globalStyle = useGlobalStyles();
   const theme = useTheme();
   const {colors} = theme;
-  const mapInfoRef = React.useRef<ModalWrapperRef>(null);
+
   return (
     <View
       style={[
@@ -25,7 +31,11 @@ export const MapInfomationHeader = () => {
       </Text>
 
       <Pressable
-        onPress={() => mapInfoRef?.current?.close()}
+        onPress={() => {
+          if (typeof ref !== 'function' && ref?.current) {
+            ref.current.close();
+          }
+        }}
         style={{position: 'absolute', right: 20}}>
         <Text style={globalStyle.textStyle('_18', colors.text, 'U_MED')}>
           Close
@@ -33,4 +43,4 @@ export const MapInfomationHeader = () => {
       </Pressable>
     </View>
   );
-};
+});

@@ -67,8 +67,10 @@ export const MapScreen = () => {
       <ModalWrapper
         ref={mapInfoRef}
         scrollViewProps={{bounces: false}}
+        handlePosition="inside"
+        handleStyle={{backgroundColor: colors.text}}
         modalHeight={Dimensions.get('window').height - 70}
-        HeaderComponent={<MapInfomationHeader />}>
+        HeaderComponent={<MapInfomationHeader ref={mapInfoRef} />}>
         <MapInformationBody />
       </ModalWrapper>
     </View>

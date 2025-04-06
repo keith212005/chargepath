@@ -30,13 +30,6 @@ export const TripsScreen = () => {
         Count: {count}
       </Text>
       <Button title="Increment" onPress={() => dispatch(increment())} />
-
-      <Button
-        title="Change theme"
-        onPress={() => {
-          dispatch(userAction.isDarkTheme(!isDark)); // Dispatch action to toggle dark mode
-        }}
-      />
     </View>
   );
 };
