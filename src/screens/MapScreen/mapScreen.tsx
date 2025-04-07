@@ -1,7 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import MapView from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTheme} from '@react-navigation/native';
+import {Portal} from 'react-native-portalize';
+import BottomSheet from '@gorhom/bottom-sheet';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  interpolate,
+  Extrapolation,
+  withTiming,
+} from 'react-native-reanimated';
+
 import {
   FloatingButton,
   NoInternetView,
@@ -11,33 +22,24 @@ import {
 import {useAppSelector} from '@store';
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
-import {useTheme} from '@react-navigation/native';
-import {Portal} from 'react-native-portalize';
 import {MapOptionsHeader} from './mapOptionsHeader';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {HEADER_HEIGHT} from '@constants';
-import {moderateScale, verticalScale, scale} from 'react-native-size-matters';
 import {MapOptionsBody} from './mapOptionsBody';
-import BottomSheet from '@gorhom/bottom-sheet';
 import {responsiveHeight} from '@utils';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  interpolate,
-  Extrapolation,
-  withTiming,
-  withSpring,
-  withDecay,
-} from 'react-native-reanimated';
 
+/**
+ * The main map screen component.
+ *
+ * This component renders a map view, a floating button container with two buttons,
+ * and two bottom sheets for displaying map information and map options.
+ *
+ * @returns The map screen component.
+ */
 export const MapScreen = () => {
-  const insets = useSafeAreaInsets();
   const {height} = useWindowDimensions();
   const isOnline = useAppSelector(state => state?.network?.isOnline);
-  const theme = useTheme();
-  const {colors} = theme;
-  const mapInfoRef = React.useRef<BottomSheetWrapperRef>(null);
-  const mapOptionsRef = React.useRef<BottomSheet>(null);
+  const {colors} = useTheme();
+  const infoSheetRef = useRef<BottomSheetWrapperRef>(null);
+  const optionsSheetRef = useRef<BottomSheet>(null);
   const sheetIndex = useSharedValue(0);
 
   const animatedMapStyle = useAnimatedStyle(() => {
@@ -47,18 +49,22 @@ export const MapScreen = () => {
       [130, height * 0.45, height * 0.45],
       Extrapolation.CLAMP,
     );
-    return {
-      marginBottom: bottomOffset,
-    };
+    return {marginBottom: bottomOffset};
   });
+
+  const handleAnimate = useCallback((fromIndex: number, toIndex: number) => {
+    if ([0, 1, 2].includes(toIndex)) {
+      sheetIndex.value = withTiming(toIndex, {duration: 500});
+    }
+  }, []);
 
   if (!isOnline) {
     return <NoInternetView />;
   }
 
   return (
-    <View style={[styles.container, {}]}>
-      <Animated.View style={[{flex: 1, borderWidth: 1}, animatedMapStyle]}>
+    <View style={styles.container}>
+      <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
         <MapView
           style={StyleSheet.absoluteFillObject}
           region={{
@@ -68,64 +74,45 @@ export const MapScreen = () => {
             longitudeDelta: 0.0121,
           }}
         />
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 2,
-            right: 0,
-            left: 0,
-          }}>
-          <View style={[styles.floatingButtonContainer]}>
+        <View style={styles.floatingButtonWrapper}>
+          <View style={styles.floatingButtonContainer}>
             <FloatingButton
               iconName="layer-group"
               iconType="font-awesome-5"
               iconColor={colors.text}
               backgroundColor={colors.card}
-              onPress={() => mapInfoRef?.current?.expand()}
+              onPress={() => infoSheetRef.current?.expand()}
             />
-
             <FloatingButton
               iconName="my-location"
               iconType="material"
               iconColor={colors.text}
               backgroundColor={colors.card}
-              onPress={() => {
-                console.log('pressed location');
-              }}
+              onPress={() => console.log('pressed location')}
             />
           </View>
         </View>
       </Animated.View>
 
-      {/* Modal Map Information */}
       <Portal>
         <BottomSheetWrapper
-          ref={mapInfoRef}
+          ref={infoSheetRef}
           snapPoints={[1, '95%']}
-          backgroundStyle={{borderRadius: 0}}
-          style={{backgroundColor: 'red'}}>
-          <MapInfomationHeader ref={mapInfoRef} />
+          backgroundStyle={styles.sheetBorderRadius}
+          style={styles.infoSheet}>
+          <MapInfomationHeader ref={infoSheetRef} />
           <MapInformationBody />
         </BottomSheetWrapper>
       </Portal>
 
-      {/* Modal Shown above Tab Bar */}
       <BottomSheetWrapper
-        ref={mapOptionsRef}
+        ref={optionsSheetRef}
         snapPoints={[130, '50%', '90%']}
-        enableDynamicSizing={true}
-        backgroundStyle={{borderRadius: 0}}
-        onChange={index => {
-          console.log(index);
-          sheetIndex.value = withTiming(index, {
-            duration: 600,
-          });
-        }}>
+        enableDynamicSizing
+        backgroundStyle={styles.sheetBorderRadius}
+        onAnimate={handleAnimate}>
         <View
-          style={{
-            backgroundColor: colors.background,
-            paddingTop: responsiveHeight(2),
-          }}>
+          style={[styles.optionsBody, {backgroundColor: colors.background}]}>
           <MapOptionsHeader />
           <MapOptionsBody />
         </View>
@@ -139,9 +126,27 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
   },
+  mapContainer: {
+    flex: 1,
+  },
+  floatingButtonWrapper: {
+    position: 'absolute',
+    bottom: 2,
+    right: 0,
+    left: 0,
+  },
   floatingButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 20,
+  },
+  sheetBorderRadius: {
+    borderRadius: 0,
+  },
+  infoSheet: {
+    backgroundColor: 'red',
+  },
+  optionsBody: {
+    paddingTop: responsiveHeight(2),
   },
 });
