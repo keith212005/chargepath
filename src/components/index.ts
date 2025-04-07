@@ -1,3 +1,3 @@
 export * from './FloatingButton';
 export * from './NoInternetView';
-export * from './Modals';
+export * from './Wrappers';

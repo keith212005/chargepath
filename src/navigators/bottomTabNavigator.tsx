@@ -5,6 +5,7 @@ import {BookmarksScreen, MapScreen, MeScreen, TripsScreen} from '@screens';
 import {Icon} from '@rneui/themed';
 import {useGlobalStyles} from '@utils';
 import {useTheme} from '@react-navigation/native';
+import {_colorDark, _colorLight} from '@constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +70,10 @@ export const BottomTabNavigator = () => {
   };
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {borderTopColor: '#8E8E93'},
+      }}>
       {renderTab('Map', MapScreen, 'map', 'ionicons')}
       {renderTab('Trips', TripsScreen, 'car-alt', 'font-awesome-5')}
       {renderTab('Bookmarks', BookmarksScreen, 'bookmark', 'font-awesome')}

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "npx react-native run-android",
-    "ios": "npx react-native run-ios --simulator='iPhone 16 Pro Max'",
+    "ios": "npx react-native run-ios --simulator='iPhone 16 Pro Max' --device 'ketan’s iPhone'",
     "ios-device": "npx react-native run-ios --device 'ketan’s iPhone'",
     "lint": "eslint .",
     "start": "npx react-native start --reset-cache",
@@ -14,6 +14,7 @@
     "link-assets": "npx react-native-asset"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^5",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-navigation/bottom-tabs": "^7.3.9",
@@ -28,8 +29,8 @@
     "react-native-config": "^1.5.5",
     "react-native-gesture-handler": "^2.25.0",
     "react-native-maps": "^1.20.1",
-    "react-native-modalize": "^2.1.1",
     "react-native-portalize": "^1.0.7",
+    "react-native-reanimated": "^3.17.2",
     "react-native-safe-area-context": "^5.3.0",
     "react-native-screens": "^4.10.0",
     "react-native-size-matters": "^0.4.2",

@@ -98,7 +98,7 @@ export const MapInformationBody = () => {
       <View
         style={[
           globalStyles.layoutDirection('row', 'flex-start', 'center'),
-          {paddingVertical: 20},
+          {paddingVertical: 12},
         ]}>
         <Icon
           name={iconName}
@@ -129,9 +129,7 @@ export const MapInformationBody = () => {
           style={[
             globalStyles.layoutDirection('row', 'space-between', 'flex-start'),
             styles.mapLegendRowContainer,
-            {
-              borderColor: colors.text,
-            },
+            {borderColor: colors.text},
           ]}>
           <View
             style={{flexDirection: 'column', justifyContent: 'space-between'}}>

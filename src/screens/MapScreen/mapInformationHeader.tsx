@@ -1,4 +1,4 @@
-import {ModalWrapperRef} from '@components';
+import {BottomSheetWrapperRef} from '@components';
 import {useTheme} from '@react-navigation/native';
 import {useGlobalStyles} from '@utils';
 import React, {forwardRef} from 'react';
@@ -8,7 +8,7 @@ import {View, Text, Pressable} from 'react-native';
 type MapInformationHeaderProps = {};
 
 export const MapInfomationHeader = forwardRef<
-  ModalWrapperRef,
+  BottomSheetWrapperRef,
   MapInformationHeaderProps
 >((_props, ref) => {
   const globalStyle = useGlobalStyles();
