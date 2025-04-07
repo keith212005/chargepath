@@ -1,11 +1,6 @@
 import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {
-  counterReducer,
-  networkReducer,
-  themeReducer,
-  userReducer,
-} from '@slice';
+import {networkReducer, themeReducer, userReducer} from '@slice';
 import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,7 +11,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   network: networkReducer,
   user: userReducer,
   theme: themeReducer,

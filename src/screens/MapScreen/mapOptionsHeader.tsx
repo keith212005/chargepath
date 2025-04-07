@@ -1,4 +1,5 @@
 import {MAP_OPTIONS_LIST} from '@constants';
+import {useAppTheme} from '@hooks';
 import {useTheme} from '@react-navigation/native';
 import {IconType} from '@rneui/base';
 import {FAB} from '@rneui/themed';
@@ -8,8 +9,7 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 
 export const MapOptionsHeader = () => {
   const globalStyles = useGlobalStyles();
-  const theme = useTheme();
-  const {colors} = theme;
+  const {colors} = useAppTheme();
 
   const renderButton = (
     label: string,

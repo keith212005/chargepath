@@ -15,7 +15,6 @@ export const useThemeListener = () => {
     const subscription = Appearance.addChangeListener(
       (preferences: Appearance.AppearancePreferences) => {
         const theme: ColorSchemeName = preferences.colorScheme;
-        console.log('Dispatching theme to reducer:', theme);
         dispatch(setTheme(theme ?? 'light'));
       },
     );

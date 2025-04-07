@@ -1,10 +1,10 @@
+import {useAppTheme} from '@hooks';
 import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {View, Text} from 'react-native';
 
 export const MapOptionsBody = () => {
-  const theme = useTheme();
-  const {colors} = theme;
+  const {colors} = useAppTheme();
 
   return (
     <View style={{backgroundColor: 'red', marginTop: 20}}>

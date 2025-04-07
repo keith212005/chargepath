@@ -1,21 +1,17 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {RootState, useAppSelector} from '@store';
-import {increment, userAction} from '@slice';
-import {Button} from '@rneui/themed';
+import {View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '@store';
 import {NoInternetView} from '@components';
 import {useGlobalStyles} from '@utils';
 import {useTheme} from '@react-navigation/native';
+import {useAppTheme} from '@hooks';
 
 export const TripsScreen = () => {
-  const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
-  const isOnline = useAppSelector(state => state?.network?.isOnline);
+  const isOnline = useAppSelector(state => state.network.isOnline);
   const globalStyle = useGlobalStyles();
-
-  const theme = useTheme();
-  const {colors} = theme;
+  const {colors} = useAppTheme();
 
   if (!isOnline) {
     return <NoInternetView />;
@@ -25,11 +21,6 @@ export const TripsScreen = () => {
       style={[
         globalStyle.layoutDirection('column', 'center', 'center'),
         {flex: 1, backgroundColor: colors.background},
-      ]}>
-      <Text style={{fontFamily: 'Inter-Bold', fontSize: 30}}>
-        Count: {count}
-      </Text>
-      <Button title="Increment" onPress={() => dispatch(increment())} />
-    </View>
+      ]}></View>
   );
 };

@@ -6,13 +6,13 @@ import {Icon} from '@rneui/themed';
 import {useGlobalStyles} from '@utils';
 import {useTheme} from '@react-navigation/native';
 import {_colorDark, _colorLight} from '@constants';
+import {useAppTheme} from '@hooks';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
   const globalStyle = useGlobalStyles();
-  const theme = useTheme();
-  const {colors} = theme;
+  const {colors} = useAppTheme();
 
   const renderTab = (
     name: string,
@@ -44,8 +44,6 @@ export const BottomTabNavigator = () => {
                 iconType = 'ionicon';
                 break;
             }
-            console.log(colors.text);
-
             return (
               <Icon
                 name={iconName}

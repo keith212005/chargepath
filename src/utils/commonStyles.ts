@@ -1,9 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-
-import {useTheme} from '@react-navigation/native';
 import {FONTS, FONT_SIZE} from '@constants';
-import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import {moderateScale} from 'react-native-size-matters';
+import {useAppTheme} from '@hooks';
 
 const getGlobalStyles = (props: {colors: any}) => ({
   textStyle: (
@@ -55,7 +53,7 @@ const getGlobalStyles = (props: {colors: any}) => ({
 
 // This is an example of custom Hook
 export function useGlobalStyles() {
-  const {colors} = useTheme();
+  const {colors} = useAppTheme();
 
   // We only want to recompute the stylesheet on changes in color.
   const styles = React.useMemo(() => getGlobalStyles({colors}), [colors]);

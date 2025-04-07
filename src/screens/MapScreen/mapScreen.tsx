@@ -25,6 +25,7 @@ import {MapInformationBody} from './mapInformationBody';
 import {MapOptionsHeader} from './mapOptionsHeader';
 import {MapOptionsBody} from './mapOptionsBody';
 import {responsiveHeight} from '@utils';
+import {useAppTheme} from '@hooks';
 
 /**
  * The main map screen component.
@@ -37,7 +38,7 @@ import {responsiveHeight} from '@utils';
 export const MapScreen = () => {
   const {height} = useWindowDimensions();
   const isOnline = useAppSelector(state => state?.network?.isOnline);
-  const {colors} = useTheme();
+  const {colors} = useAppTheme();
   const infoSheetRef = useRef<BottomSheetWrapperRef>(null);
   const optionsSheetRef = useRef<BottomSheet>(null);
   const sheetIndex = useSharedValue(0);

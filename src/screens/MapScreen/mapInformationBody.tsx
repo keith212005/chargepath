@@ -1,3 +1,4 @@
+import {useAppTheme} from '@hooks';
 import {useTheme} from '@react-navigation/native';
 import {ButtonGroup, Divider, Icon, Switch} from '@rneui/themed';
 import {useAppSelector} from '@store';
@@ -8,8 +9,7 @@ import {Text} from 'react-native-gesture-handler';
 
 export const MapInformationBody = () => {
   const globalStyles = useGlobalStyles();
-  const theme = useTheme();
-  const {colors} = theme;
+  const {colors} = useAppTheme();
   const isDark = useAppSelector(state => state.theme.currentTheme === 'dark');
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);

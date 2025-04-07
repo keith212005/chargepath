@@ -1,4 +1,5 @@
 import {BottomSheetWrapperRef} from '@components';
+import {useAppTheme} from '@hooks';
 import {useTheme} from '@react-navigation/native';
 import {useGlobalStyles} from '@utils';
 import React, {forwardRef} from 'react';
@@ -12,8 +13,7 @@ export const MapInfomationHeader = forwardRef<
   MapInformationHeaderProps
 >((_props, ref) => {
   const globalStyle = useGlobalStyles();
-  const theme = useTheme();
-  const {colors} = theme;
+  const {colors} = useAppTheme();
 
   return (
     <View
