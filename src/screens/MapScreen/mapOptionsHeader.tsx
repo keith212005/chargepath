@@ -25,7 +25,7 @@ export const MapOptionsHeader = () => {
         ]}>
         <FAB
           icon={{name: iconName, type: iconType, color: iconColor}}
-          color={colors.background}
+          color={colors.card}
           onPress={() => {}}
           style={[styles.shadowContainer, {backgroundColor: colors.background}]}
           containerStyle={{borderWidth: 0.2, borderColor: colors.text}}

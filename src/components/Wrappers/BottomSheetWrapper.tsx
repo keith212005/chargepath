@@ -25,7 +25,7 @@ export const BottomSheetWrapper = forwardRef<
 
   useImperativeHandle(ref, () => ({
     expand: () => bottomSheetRef.current?.expand(),
-    close: () => bottomSheetRef.current?.close(),
+    close: () => bottomSheetRef.current?.collapse(),
   })); // Expose any custom methods here
 
   return (

@@ -1,7 +1,7 @@
 import {useTheme} from '@react-navigation/native';
 import {ButtonGroup, Divider, Icon, Switch} from '@rneui/themed';
 import {useAppSelector} from '@store';
-import {useGlobalStyles} from '@utils';
+import {responsiveHeight, useGlobalStyles} from '@utils';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-gesture-handler';
@@ -22,7 +22,7 @@ export const MapInformationBody = () => {
         <View
           style={[
             globalStyles.layoutDirection('row', 'space-between', 'center'),
-            {paddingVertical: 10, width: '100%'},
+            {paddingVertical: responsiveHeight(1), width: '100%'},
           ]}>
           <Text style={globalStyles.textStyle('_15', 'text', 'U_REG')}>
             {label}
@@ -73,14 +73,7 @@ export const MapInformationBody = () => {
 
         {/* Show Traffic & Scale container*/}
         <View
-          style={{
-            borderWidth: 0.2,
-            borderRadius: 5,
-            borderColor: colors.text,
-            padding: 10,
-            marginVertical: 10,
-            flex: 1,
-          }}>
+          style={[{borderColor: colors.text}, styles.mapLayersRowContainer]}>
           {renderShowRow('Show Traffic')}
           <Divider />
           {renderShowRow('Show Scale')}
@@ -148,7 +141,7 @@ export const MapInformationBody = () => {
     );
   };
   return (
-    <View style={[styles.container, {backgroundColor: colors.card}]}>
+    <View style={[styles.container, {backgroundColor: colors.background}]}>
       <MapLayers />
       <MapLegends />
     </View>
@@ -166,5 +159,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginTop: 20,
+  },
+  mapLayersRowContainer: {
+    borderWidth: 0.2,
+    borderRadius: 5,
+    padding: 10,
+    marginVertical: 10,
   },
 });

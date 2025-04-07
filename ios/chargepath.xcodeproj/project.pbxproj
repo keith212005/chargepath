@@ -45,12 +45,12 @@
 		3B4392A12AC88292D35C810B /* Pods-chargepath.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chargepath.debug.xcconfig"; path = "Target Support Files/Pods-chargepath/Pods-chargepath.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-chargepath.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chargepath.release.xcconfig"; path = "Target Support Files/Pods-chargepath/Pods-chargepath.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-chargepath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chargepath.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		72CC1EC79A6D47E8BE55C297 /* UberMove-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Light.ttf"; path = "../src/assets/fonts/UberMove-Light.ttf"; sourceTree = "<group>"; };
+		72CC1EC79A6D47E8BE55C297 /* UberMove-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Light.ttf"; path = "../src/assets/fonts/UberMove-Light.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = chargepath/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = chargepath/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		836FD6623519452C970AA029 /* UberMove-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Regular.ttf"; path = "../src/assets/fonts/UberMove-Regular.ttf"; sourceTree = "<group>"; };
-		867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Bold.ttf"; path = "../src/assets/fonts/UberMove-Bold.ttf"; sourceTree = "<group>"; };
-		E910BFBAAFCD4880B4E8A3D7 /* UberMove-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Medium.ttf"; path = "../src/assets/fonts/UberMove-Medium.ttf"; sourceTree = "<group>"; };
+		836FD6623519452C970AA029 /* UberMove-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Regular.ttf"; path = "../src/assets/fonts/UberMove-Regular.ttf"; sourceTree = "<group>"; };
+		867B2E7F6B4C4909970D5288 /* UberMove-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Bold.ttf"; path = "../src/assets/fonts/UberMove-Bold.ttf"; sourceTree = "<group>"; };
+		E910BFBAAFCD4880B4E8A3D7 /* UberMove-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "UberMove-Medium.ttf"; path = "../src/assets/fonts/UberMove-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -162,7 +162,6 @@
 				836FD6623519452C970AA029 /* UberMove-Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -449,10 +448,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -521,10 +517,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
