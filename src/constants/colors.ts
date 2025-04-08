@@ -2,7 +2,7 @@ import {DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {useAppSelector} from '@store';
 import {useEffect, useState} from 'react';
 
-export const _colorLight = {
+const _colorLight = {
   background: '#FFFFFF', // Clean white background
   primary: '#05A357', // Uber Eats green
   secondary: '#000000', // Black buttons/text
@@ -13,7 +13,7 @@ export const _colorLight = {
   card: '#FFFFFF', // Cards on white background
 };
 
-export const _colorDark = {
+const _colorDark = {
   background: '#121212', // Deep black background
   primary: '#05A357', // Uber Eats green (pops on dark)
   secondary: '#FFFFFF', // White text/buttons
@@ -24,11 +24,20 @@ export const _colorDark = {
   card: '#1C1C1E', // Slightly lighter than full black
 };
 
+// define colors used in both themes
+const _commonColors = {
+  brwn_mk: 'rgba(156, 130, 91, 0.79)',
+  gry_mk: 'rgba(172, 162, 162, 0.67)',
+  gre_mk: 'rgb(31, 191, 103)',
+  yel_mk: 'rgba(221, 162, 24, 0.92)',
+};
+
 export const MyDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
     ..._colorDark,
+    ..._commonColors,
   },
 };
 
@@ -37,5 +46,6 @@ export const LightTheme = {
   colors: {
     ...DefaultTheme.colors,
     ..._colorLight,
+    ..._commonColors,
   },
 };

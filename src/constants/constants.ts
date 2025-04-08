@@ -58,3 +58,6 @@ export const MAP_OPTIONS_LIST = [
     iconName: 'map-marker-plus-outline',
   },
 ];
+
+// latitudeDelta: 0.015,
+// longitudeDelta: 0.041,

@@ -31,8 +31,15 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+ 	<string>We use your location even in the background to notify about nearby stations.</string>
+  	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+  	<dict>
+    	<key>charging-accuracy</key>
+  		<string>We need precise location temporarily to accurately detect the closest charging station.</string>
+  	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>We use your location to show nearby charging stations.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

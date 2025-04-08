@@ -1,8 +1,6 @@
 import React, {useCallback, useRef} from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import MapView from 'react-native-maps';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useTheme} from '@react-navigation/native';
+import {Alert, StyleSheet, useWindowDimensions, View} from 'react-native';
+import MapView, {Region} from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
 import BottomSheet from '@gorhom/bottom-sheet';
 import Animated, {
@@ -15,17 +13,18 @@ import Animated, {
 
 import {
   FloatingButton,
-  NoInternetView,
   BottomSheetWrapper,
   BottomSheetWrapperRef,
 } from '@components';
-import {useAppSelector} from '@store';
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
 import {MapOptionsHeader} from './mapOptionsHeader';
 import {MapOptionsBody} from './mapOptionsBody';
 import {responsiveHeight} from '@utils';
 import {useAppTheme} from '@hooks';
+import {useLocationPermissionAndRegion} from '@hooks';
+import {RESULTS} from 'react-native-permissions';
+import {useAppSelector} from '@store';
 
 /**
  * The main map screen component.
@@ -37,11 +36,16 @@ import {useAppTheme} from '@hooks';
  */
 export const MapScreen = () => {
   const {height} = useWindowDimensions();
-  const isOnline = useAppSelector(state => state?.network?.isOnline);
   const {colors} = useAppTheme();
   const infoSheetRef = useRef<BottomSheetWrapperRef>(null);
   const optionsSheetRef = useRef<BottomSheet>(null);
   const sheetIndex = useSharedValue(0);
+  const mapRef = useRef<MapView>(null);
+  const {mapType, showTraffic, showScale} = useAppSelector(state => {
+    return state.mapType;
+  });
+  const {region, permissionStatus, loading, refresh, openAppSettings} =
+    useLocationPermissionAndRegion();
 
   const animatedMapStyle = useAnimatedStyle(() => {
     const bottomOffset = interpolate(
@@ -59,21 +63,76 @@ export const MapScreen = () => {
     }
   }, []);
 
-  if (!isOnline) {
-    return <NoInternetView />;
-  }
+  const handlePermissionStatus = () => {
+    switch (permissionStatus) {
+      case RESULTS.BLOCKED:
+        Alert.alert(
+          'Location Permission',
+          'Please enable location permission in settings',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'Settings',
+              onPress: () => openAppSettings(),
+            },
+          ],
+        );
+        break;
+
+      case RESULTS.GRANTED:
+        if (mapRef.current && region) {
+          mapRef.current.animateToRegion(
+            {
+              ...region,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05,
+            },
+            1000,
+          );
+        } else {
+          Alert.alert('Error', 'Unable to center the map. Try again.');
+        }
+        break;
+
+      case RESULTS.DENIED:
+        Alert.alert(
+          'Location Permission',
+          'Location permission is denied. Please grant permission to use this feature.',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+            },
+            {
+              text: 'Request Permission',
+              onPress: () => refresh(),
+            },
+          ],
+        );
+        break;
+
+      default:
+        Alert.alert('Error', 'Unable to determine permission status.');
+        break;
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
         <MapView
+          showsScale={showScale}
+          mapType={mapType.type}
+          showsTraffic={showTraffic}
+          ref={mapRef} // Step 2: Update MapView component
+          showsUserLocation={true}
+          loadingEnabled={loading}
           style={StyleSheet.absoluteFillObject}
-          region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
+          region={region as Region | undefined}
         />
         <View style={styles.floatingButtonWrapper}>
           <View style={styles.floatingButtonContainer}>
@@ -83,13 +142,15 @@ export const MapScreen = () => {
               iconColor={colors.text}
               backgroundColor={colors.card}
               onPress={() => infoSheetRef.current?.expand()}
+              accessible={true}
+              accessibilityLabel="Open map layers"
             />
             <FloatingButton
               iconName="my-location"
               iconType="material"
               iconColor={colors.text}
               backgroundColor={colors.card}
-              onPress={() => console.log('pressed location')}
+              onPress={handlePermissionStatus}
             />
           </View>
         </View>
@@ -99,8 +160,7 @@ export const MapScreen = () => {
         <BottomSheetWrapper
           ref={infoSheetRef}
           snapPoints={[1, '95%']}
-          backgroundStyle={styles.sheetBorderRadius}
-          style={styles.infoSheet}>
+          backgroundStyle={styles.sheetBorderRadius}>
           <MapInfomationHeader ref={infoSheetRef} />
           <MapInformationBody />
         </BottomSheetWrapper>
@@ -144,9 +204,7 @@ const styles = StyleSheet.create({
   sheetBorderRadius: {
     borderRadius: 0,
   },
-  infoSheet: {
-    backgroundColor: 'red',
-  },
+
   optionsBody: {
     paddingTop: responsiveHeight(2),
   },

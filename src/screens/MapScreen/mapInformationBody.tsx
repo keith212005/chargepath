@@ -1,23 +1,36 @@
 import {useAppTheme} from '@hooks';
-import {useTheme} from '@react-navigation/native';
 import {ButtonGroup, Divider, Icon, Switch} from '@rneui/themed';
-import {useAppSelector} from '@store';
+import {setMapType, setShowScale, setShowTraffic} from '@slice';
+import {useAppDispatch, useAppSelector} from '@store';
 import {responsiveHeight, useGlobalStyles} from '@utils';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-gesture-handler';
 
 export const MapInformationBody = () => {
+  const dispatch = useAppDispatch();
   const globalStyles = useGlobalStyles();
   const {colors} = useAppTheme();
-  const isDark = useAppSelector(state => state.theme.currentTheme === 'dark');
+  console.log('colors', colors);
 
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [selectedIndexes, setSelectedIndexes] = React.useState([]);
-  const [selected, setSelected] = React.useState(true);
+  const {showTraffic, showScale, mapType} = useAppSelector(
+    state => state.mapType,
+  );
 
   const MapLayers = () => {
-    const renderShowRow = (label: string) => {
+    const renderShowRow = (index: number, label: string, selected: boolean) => {
+      const handleShowTrafficOrScale = () => {
+        switch (index) {
+          case 0:
+            dispatch(setShowTraffic(!selected));
+            break;
+          case 1:
+            dispatch(setShowScale(!selected));
+            break;
+          default:
+            break;
+        }
+      };
       return (
         <View
           style={[
@@ -30,10 +43,26 @@ export const MapInformationBody = () => {
           <Switch
             color={colors.text}
             value={selected}
-            onValueChange={() => setSelected(!selected)}
+            onValueChange={handleShowTrafficOrScale}
           />
         </View>
       );
+    };
+
+    const handleSelctedMapType = (index: number) => {
+      switch (index) {
+        case 0:
+          dispatch(setMapType(0));
+          break;
+        case 1:
+          dispatch(setMapType(1));
+          break;
+        case 2:
+          dispatch(setMapType(2));
+          break;
+        default:
+          break;
+      }
     };
 
     return (
@@ -58,12 +87,9 @@ export const MapInformationBody = () => {
           disabledSelectedStyle={{}}
           disabledSelectedTextStyle={{}}
           innerBorderStyle={{}}
-          onPress={selectedIdx => setSelectedIndex(selectedIdx)}
-          selectedButtonStyle={{
-            backgroundColor: isDark ? colors.text : colors.text,
-          }}
-          selectedIndex={selectedIndex}
-          selectedIndexes={selectedIndexes}
+          onPress={selectedIdx => handleSelctedMapType(selectedIdx)}
+          selectedButtonStyle={{backgroundColor: colors.text}}
+          selectedIndex={mapType.index}
           selectedTextStyle={[
             globalStyles.textStyle('_15', colors.background, 'U_BOLD'),
             {},
@@ -74,9 +100,9 @@ export const MapInformationBody = () => {
         {/* Show Traffic & Scale container*/}
         <View
           style={[{borderColor: colors.text}, styles.mapLayersRowContainer]}>
-          {renderShowRow('Show Traffic')}
-          <Divider />
-          {renderShowRow('Show Scale')}
+          {mapType.index != 1 && renderShowRow(0, 'Show Traffic', showTraffic)}
+          {mapType.index != 1 && <Divider />}
+          {renderShowRow(1, 'Show Scale', showScale)}
         </View>
       </View>
     );
@@ -87,6 +113,7 @@ export const MapInformationBody = () => {
       label: string,
       iconType: string,
       iconName: string,
+      iconColor: string,
     ) => (
       <View
         style={[
@@ -96,8 +123,8 @@ export const MapInformationBody = () => {
         <Icon
           name={iconName}
           type={iconType}
-          size={20}
-          color={'brown'}
+          size={26}
+          color={iconColor}
           style={{paddingRight: 10}}
         />
         <Text style={globalStyles.textStyle('_15', 'text', 'U_REG')}>
@@ -126,15 +153,45 @@ export const MapInformationBody = () => {
           ]}>
           <View
             style={{flexDirection: 'column', justifyContent: 'space-between'}}>
-            {renderLegendRow('Restricted', 'font-awesome-5', 'map-marker')}
-            {renderLegendRow('In Use', 'font-awesome-5', 'map-marker')}
-            {renderLegendRow('Residential', 'font-awesome-5', 'map-marker')}
+            {renderLegendRow(
+              'Restricted',
+              'font-awesome-5',
+              'map-marker',
+              colors.brwn_mk,
+            )}
+            {renderLegendRow(
+              'In Use',
+              'font-awesome-5',
+              'map-marker',
+              colors.gry_mk,
+            )}
+            {renderLegendRow(
+              'Residential',
+              'material-community',
+              'home-circle',
+              colors.text,
+            )}
           </View>
           <View
             style={{flexDirection: 'column', justifyContent: 'space-between'}}>
-            {renderLegendRow('Level 2', 'font-awesome-5', 'map-marker')}
-            {renderLegendRow('High Power', 'font-awesome-5', 'map-marker')}
-            {renderLegendRow('Under Repair', 'font-awesome-5', 'map-marker')}
+            {renderLegendRow(
+              'Level 2',
+              'font-awesome-5',
+              'map-marker',
+              colors.gre_mk,
+            )}
+            {renderLegendRow(
+              'High Power',
+              'font-awesome-5',
+              'map-marker',
+              colors.yel_mk,
+            )}
+            {renderLegendRow(
+              'Under Repair',
+              'ionicon',
+              'construct',
+              colors.gry_mk,
+            )}
           </View>
         </View>
       </View>
