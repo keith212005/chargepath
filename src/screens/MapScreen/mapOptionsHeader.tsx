@@ -1,11 +1,11 @@
+import React from 'react';
 import {MAP_OPTIONS_LIST} from '@constants';
 import {useAppTheme} from '@hooks';
-import {useTheme} from '@react-navigation/native';
 import {IconType} from '@rneui/base';
 import {FAB} from '@rneui/themed';
 import {responsiveWidth, useGlobalStyles} from '@utils';
-import React from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {navigate} from '@navigators';
 
 export const MapOptionsHeader = () => {
   const globalStyles = useGlobalStyles();
@@ -26,7 +26,9 @@ export const MapOptionsHeader = () => {
         <FAB
           icon={{name: iconName, type: iconType, color: iconColor}}
           color={colors.card}
-          onPress={() => {}}
+          onPress={() => {
+            navigate('SearchScreen', undefined);
+          }}
           style={[styles.shadowContainer, {backgroundColor: colors.background}]}
           containerStyle={{borderWidth: 0.2, borderColor: colors.text}}
         />

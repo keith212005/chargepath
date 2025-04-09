@@ -26,10 +26,8 @@ const _colorDark = {
 
 // define colors used in both themes
 const _commonColors = {
-  brwn_mk: 'rgba(156, 130, 91, 0.79)',
-  gry_mk: 'rgba(172, 162, 162, 0.67)',
-  gre_mk: 'rgb(31, 191, 103)',
-  yel_mk: 'rgba(221, 162, 24, 0.92)',
+  black: '#121212',
+  white: '#FFFFFF',
 };
 
 export const MyDarkTheme = {

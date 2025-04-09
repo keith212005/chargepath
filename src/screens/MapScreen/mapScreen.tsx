@@ -172,8 +172,7 @@ export const MapScreen = () => {
         enableDynamicSizing
         backgroundStyle={styles.sheetBorderRadius}
         onAnimate={handleAnimate}>
-        <View
-          style={[styles.optionsBody, {backgroundColor: colors.background}]}>
+        <View style={[styles.optionsBody, {backgroundColor: colors.accent}]}>
           <MapOptionsHeader />
           <MapOptionsBody />
         </View>

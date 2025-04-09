@@ -59,5 +59,44 @@ export const MAP_OPTIONS_LIST = [
   },
 ];
 
+export const LEGENDS = [
+  {
+    label: 'Restricted',
+    iconType: 'font-awesome-5',
+    iconName: 'map-marker',
+    iconColor: 'rgba(156, 130, 91, 0.79)',
+  },
+  {
+    label: 'In Use',
+    iconType: 'font-awesome-5',
+    iconName: 'map-marker',
+    iconColor: 'rgba(172, 162, 162, 0.67)',
+  },
+  {
+    label: 'Residential',
+    iconType: 'material-community',
+    iconName: 'home-circle',
+    iconColor: 'rgba(172, 162, 162, 0.67)',
+  },
+  {
+    label: 'Level 2',
+    iconType: 'font-awesome-5',
+    iconName: 'map-marker',
+    iconColor: 'rgb(31, 191, 103)',
+  },
+  {
+    label: 'High Power',
+    iconType: 'font-awesome-5',
+    iconName: 'map-marker',
+    iconColor: 'rgba(221, 162, 24, 0.92)',
+  },
+  {
+    label: 'Under Repair',
+    iconType: 'ionicon',
+    iconName: 'construct',
+    iconColor: 'rgba(172, 162, 162, 0.67)',
+  },
+];
+
 // latitudeDelta: 0.015,
 // longitudeDelta: 0.041,

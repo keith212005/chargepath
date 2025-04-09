@@ -3,13 +3,14 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {LoginScreen} from '@screens';
+import {LoginScreen, SearchScreen} from '@screens';
 import {BottomTabNavigator} from './bottomTabNavigator';
 import {useNetworkStatus, useThemeListener} from '@hooks';
 import {useAppSelector} from '@store';
 import {LightTheme, MyDarkTheme} from '@constants';
 import {Host} from 'react-native-portalize';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {navigationRef} from './navigationService';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,13 +21,16 @@ export const AppContainer = () => {
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer theme={theme === 'dark' ? MyDarkTheme : LightTheme}>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={theme === 'dark' ? MyDarkTheme : LightTheme}>
         <Host>
           <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{headerShown: false}}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Home" component={BottomTabNavigator} />
+            <Stack.Screen name="SearchScreen" component={SearchScreen} />
           </Stack.Navigator>
         </Host>
       </NavigationContainer>

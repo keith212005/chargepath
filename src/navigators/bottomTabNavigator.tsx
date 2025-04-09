@@ -4,8 +4,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BookmarksScreen, MapScreen, MeScreen, TripsScreen} from '@screens';
 import {Icon} from '@rneui/themed';
 import {useGlobalStyles} from '@utils';
-import {useTheme} from '@react-navigation/native';
-import {_colorDark, _colorLight} from '@constants';
 import {useAppTheme} from '@hooks';
 
 const Tab = createBottomTabNavigator();

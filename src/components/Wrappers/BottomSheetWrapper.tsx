@@ -1,4 +1,5 @@
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import {useAppTheme} from '@hooks';
 import React, {
   useCallback,
   useRef,
@@ -18,6 +19,7 @@ export const BottomSheetWrapper = forwardRef<
   React.ComponentProps<typeof BottomSheet> & {children?: React.ReactNode}
 >((props, ref) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const {colors} = useAppTheme();
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
@@ -29,8 +31,17 @@ export const BottomSheetWrapper = forwardRef<
   })); // Expose any custom methods here
 
   return (
-    <BottomSheet ref={bottomSheetRef} onChange={handleSheetChanges} {...props}>
-      <BottomSheetView style={styles.contentContainer}>
+    <BottomSheet
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      {...props}
+      handleIndicatorStyle={{
+        backgroundColor: colors.text,
+      }}
+      backgroundStyle={{
+        backgroundColor: colors.background,
+      }}>
+      <BottomSheetView style={[styles.contentContainer, {}]}>
         {props.children}
       </BottomSheetView>
     </BottomSheet>

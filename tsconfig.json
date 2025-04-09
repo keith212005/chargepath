@@ -15,8 +15,5 @@
       "@hooks": ["./hooks"]
     },
     "typeRoots": ["./types", "./node_modules/@types"]
-    // "noUnusedLocals": true, // Flags unused local variables
-    // "noUnusedParameters": true, // Flags unused function parameters
-    // "strict": true // Enables strict type-checking
   }
 }
