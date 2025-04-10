@@ -1,128 +1,62 @@
+import React, {useEffect} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import {useAppTheme, useLocationPermissionAndRegion} from '@hooks';
-import {useGlobalStyles} from '@utils';
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import {GreenChargerMarker, OrangeChargerMarker} from '@assets';
-import {OPEN_CH_API_PARAMS} from '@constants';
 import {Divider} from '@rneui/themed';
+import {useAppTheme, useLocationPermissionAndRegion} from '@hooks';
+import {useAppDispatch, useAppSelector} from '@store';
+import {getChargingStations} from '@slice';
+import {
+  calculateDistance,
+  getPlugScore,
+  getPlugTypes,
+  getTotalChargers,
+  hasFastCharger,
+  useGlobalStyles,
+} from '@utils';
+import {GreenChargerMarker, OrangeChargerMarker} from '@assets';
 
 export const AvailableStations = () => {
+  const dispatch = useAppDispatch();
   const {colors} = useAppTheme();
   const globalStyles = useGlobalStyles();
-  const [list, setList] = useState([]);
-  const {region, permissionStatus, loading, refresh, openAppSettings} =
-    useLocationPermissionAndRegion();
-  const BASE_URL = process.env.OPEN_CHARGE_MAP_BASE_URL as string;
-
-  console.log(region);
+  const stationList = useAppSelector(state => state.stationList.data);
+  const {region} = useLocationPermissionAndRegion();
 
   useEffect(() => {
-    const fetchNearbyStations = async (latitude: any, longitude: any) => {
-      try {
-        const response = await axios.get(BASE_URL, {
-          params: {
-            latitude, // your current location
-            longitude,
-            ...OPEN_CH_API_PARAMS,
-          },
-        });
-        setList(response.data);
-      } catch (error) {
-        console.error('Failed to fetch nearby stations', error);
-        return [];
-      }
-    };
-
-    fetchNearbyStations(region?.latitude, region?.longitude);
+    if (region) {
+      const {latitude, longitude} = region;
+      dispatch(getChargingStations({latitude, longitude}));
+    }
   }, [region]);
 
-  const getPlugScore = (station: any): string => {
-    const connections = station.Connections || [];
-    if (connections.length === 0) return '0.0';
-
-    let totalScore = 0;
-
-    connections.forEach((conn: any) => {
-      let score = 0;
-
-      if (conn.PowerKW >= 100) score += 5;
-      else if (conn.PowerKW >= 50) score += 4;
-      else if (conn.PowerKW >= 22) score += 3;
-      else if (conn.PowerKW >= 7) score += 2;
-      else score += 1;
-
-      if (conn.Level?.IsFastChargeCapable) score += 2;
-
-      if (conn.CurrentType?.Title?.includes('DC')) score += 1;
-
-      if (conn.StatusType?.Title === 'Operational') score += 1;
-
-      totalScore += score;
-    });
-
-    const averageScore = totalScore / connections.length;
-    return Math.min(10, averageScore).toFixed(1);
-  };
-
   const renderListItem = ({item}: any) => {
-    const totalChargers = item.Connections?.reduce(
-      (sum: number, conn: any) => sum + (conn.Quantity || 0),
-      0,
-    );
-
-    const plugTypes = [
-      ...new Set(
-        item.Connections.map((conn: any) => conn.ConnectionType?.Title).filter(
-          Boolean,
-        ),
-      ),
-    ].join(', ');
-
-    const isMiles = item.AddressInfo?.DistanceUnit === 1;
-    const rawDistance = item.AddressInfo?.Distance || 0;
-    const distanceInKm = isMiles ? rawDistance * 1.60934 : rawDistance;
-    const distanceDisplay =
-      distanceInKm < 1
-        ? `${Math.round(distanceInKm * 1000)} m`
-        : `${distanceInKm.toFixed(1)} km`;
-
-    const hasFastCharger = item.Connections?.some(
-      (conn: any) => conn.Level?.IsFastChargeCapable === true,
-    );
-
+    const totalChargers = getTotalChargers(item.Connections);
+    const plugTypes = getPlugTypes(item.Connections);
+    const isFastChargerAvailable = hasFastCharger(item.Connections);
+    const distanceDisplay = calculateDistance(item);
     const plugScore = getPlugScore(item);
 
     return (
       <>
         <View
-          key={item.UUID}
-          style={[
-            globalStyles.layoutDirection('row', 'center', 'center'),
-            {padding: 10, backgroundColor: colors.card},
-          ]}>
-          <View
-            style={[
-              {flex: 1.5},
-              globalStyles.layoutDirection('row', 'center', 'center'),
-            ]}>
-            {hasFastCharger ? (
+          style={[styles.listItemContainer, {backgroundColor: colors.card}]}>
+          <View style={styles.iconContainer}>
+            {isFastChargerAvailable ? (
               <OrangeChargerMarker width={30} height={50} />
             ) : (
               <GreenChargerMarker width={30} height={50} />
             )}
           </View>
-          <View style={{flex: 8.5}}>
+          <View style={styles.detailsContainer}>
             <Text style={globalStyles.textStyle('_15', 'text', 'U_BOLD')}>
               {item.AddressInfo.Title}
             </Text>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 7}}>
+            <View style={styles.infoRow}>
+              <View style={styles.infoColumn}>
                 <Text
                   style={[
                     globalStyles.textStyle('_15', 'text', 'U_BOLD'),
-                    {paddingVertical: 10},
+                    styles.chargerInfo,
                   ]}>
                   {totalChargers} Charger{totalChargers > 1 ? 's' : ''}
                 </Text>
@@ -133,17 +67,11 @@ export const AvailableStations = () => {
                   Distance: {distanceDisplay}
                 </Text>
               </View>
-              <View
-                style={{
-                  flex: 3,
-                  backgroundColor: 'green',
-                  alignSelf: 'center',
-                  borderRadius: 5,
-                }}>
+              <View style={styles.plugScoreContainer}>
                 <Text
                   style={[
                     globalStyles.textStyle('_10', 'white', 'U_BOLD'),
-                    {alignSelf: 'center', padding: 5},
+                    styles.plugScoreText,
                   ]}>
                   {plugScore} PlugScore
                 </Text>
@@ -157,15 +85,52 @@ export const AvailableStations = () => {
   };
 
   return (
-    <View style={{}}>
-      {/* Showing available charging stations near by using flatlist */}
+    <View style={styles.container}>
       <BottomSheetFlatList
         bounces={false}
         showsVerticalScrollIndicator={false}
         scrollEnabled={true}
-        data={list}
+        data={stationList as any}
         renderItem={renderListItem}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  listItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  iconContainer: {
+    flex: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  detailsContainer: {
+    flex: 8.5,
+  },
+  infoRow: {
+    flexDirection: 'row',
+  },
+  infoColumn: {
+    flex: 7,
+  },
+  chargerInfo: {
+    paddingVertical: 10,
+  },
+  plugScoreContainer: {
+    flex: 3,
+    backgroundColor: 'green',
+    alignSelf: 'center',
+    borderRadius: 5,
+  },
+  plugScoreText: {
+    alignSelf: 'center',
+    padding: 5,
+  },
+});

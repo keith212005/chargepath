@@ -8,6 +8,7 @@ import {
   userReducer,
   currentLocationReducer,
   mapTypeReducer,
+  getChargingStationsReducer,
 } from '@slice';
 
 const persistConfig = {
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   theme: themeReducer,
   currentLocation: currentLocationReducer,
   mapType: mapTypeReducer,
+  stationList: getChargingStationsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
