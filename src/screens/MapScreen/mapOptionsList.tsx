@@ -11,58 +11,70 @@ export const MapOptionsList = () => {
   const globalStyles = useGlobalStyles();
   const {colors} = useAppTheme();
 
-  const renderButton = (
-    label: string,
-    iconType: IconType,
-    iconName: string,
-    iconColor: string,
-  ) => {
-    return (
-      <View
+  const renderButton = ({
+    label,
+    iconType,
+    iconName,
+    iconColor,
+  }: {
+    label: string;
+    iconType: IconType;
+    iconName: string;
+    iconColor: string;
+  }) => (
+    <View
+      style={[
+        globalStyles.layoutDirection('column', 'center', 'center'),
+        styles.buttonContainer,
+        {backgroundColor: colors.background, borderBottomColor: colors.gray},
+      ]}>
+      <FAB
+        icon={{name: iconName, type: iconType, color: iconColor}}
+        color={colors.card}
+        onPress={() => navigate('SearchScreen', undefined)}
+        style={[styles.shadowContainer, {backgroundColor: colors.background}]}
+        containerStyle={{borderWidth: 0.5, borderColor: colors.gray}}
+      />
+      <Text
         style={[
-          globalStyles.layoutDirection('column', 'center', 'center'),
-          {
-            paddingHorizontal: responsiveWidth(2),
-            paddingVertical: responsiveHeight(1.3),
-            borderBottomWidth: 0.2,
-            borderBottomColor: colors.gray,
-            backgroundColor: colors.background,
-          },
+          globalStyles.textStyle('_12', 'text', 'U_REG'),
+          styles.buttonLabel,
+          {color: colors.text},
         ]}>
-        <FAB
-          icon={{name: iconName, type: iconType, color: iconColor}}
-          color={colors.card}
-          onPress={() => navigate('SearchScreen', undefined)}
-          style={[styles.shadowContainer, {backgroundColor: colors.background}]}
-          containerStyle={{borderWidth: 0.5, borderColor: colors.gray}}
-        />
-        <Text
-          style={[
-            globalStyles.textStyle('_12', 'text', 'U_REG'),
-            {marginTop: 5, color: colors.text},
-          ]}>
-          {label}
-        </Text>
-      </View>
-    );
-  };
+        {label}
+      </Text>
+    </View>
+  );
 
   return (
     <View>
       <FlatList
         data={MAP_OPTIONS_LIST}
-        horizontal={true}
+        horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => {
-          const {label, iconType, iconName} = item;
-          return <>{renderButton(label, iconType, iconName, colors.text)}</>;
-        }}
+        keyExtractor={(item, index) => `${item.label}-${index}`}
+        renderItem={({item}) =>
+          renderButton({
+            label: item.label,
+            iconType: item.iconType,
+            iconName: item.iconName,
+            iconColor: colors.text,
+          })
+        }
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    paddingHorizontal: responsiveWidth(2),
+    paddingVertical: responsiveHeight(1.3),
+    borderBottomWidth: 0.2,
+  },
+  buttonLabel: {
+    marginTop: 5,
+  },
   shadowContainer: {
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},

@@ -1,15 +1,14 @@
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
-import {useAppTheme} from '@hooks';
 import React, {
   useCallback,
   useRef,
   forwardRef,
   useImperativeHandle,
 } from 'react';
-import {Text, StyleSheet} from 'react-native';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import {StyleSheet} from 'react-native';
+import {useAppTheme} from '@hooks';
 
 export type BottomSheetWrapperRef = {
-  // Add methods here if needed
   expand: () => void;
   close: () => void;
 };
@@ -17,34 +16,37 @@ export type BottomSheetWrapperRef = {
 export const BottomSheetWrapper = forwardRef<
   BottomSheetWrapperRef,
   React.ComponentProps<typeof BottomSheet> & {children?: React.ReactNode}
->((props, ref) => {
+>(({children, ...props}, ref) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const {colors} = useAppTheme();
 
+  // Handle BottomSheet changes
   const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+    console.log('BottomSheet index changed:', index);
   }, []);
 
+  // Expose methods to parent components
   useImperativeHandle(ref, () => ({
     expand: () => bottomSheetRef.current?.expand(),
-    close: () => bottomSheetRef.current?.collapse(),
-  })); // Expose any custom methods here
+    close: () => bottomSheetRef.current?.close(),
+  }));
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      onChange={handleSheetChanges}
       handleIndicatorStyle={{
-        backgroundColor: colors.icon,
-        width: 60,
-        height: 9,
+        backgroundColor: colors.text,
+        width: 50,
+        height: 8,
       }}
       handleStyle={{
-        backgroundColor: colors.background,
+        backgroundColor: colors.card,
       }}
-      backgroundStyle={{backgroundColor: colors.card}}
+      onChange={handleSheetChanges}
       {...props}>
-      {props.children}
+      <BottomSheetView style={styles.contentContainer}>
+        {children}
+      </BottomSheetView>
     </BottomSheet>
   );
 });

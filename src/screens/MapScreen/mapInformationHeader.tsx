@@ -1,11 +1,9 @@
+import React, {forwardRef} from 'react';
+import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {BottomSheetWrapperRef} from '@components';
 import {useAppTheme} from '@hooks';
-import {useTheme} from '@react-navigation/native';
-import {useGlobalStyles} from '@utils';
-import React, {forwardRef} from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {responsiveWidth, useGlobalStyles} from '@utils';
 
-// If you want to allow future props, define them here
 type MapInformationHeaderProps = {};
 
 export const MapInfomationHeader = forwardRef<
@@ -15,32 +13,40 @@ export const MapInfomationHeader = forwardRef<
   const globalStyle = useGlobalStyles();
   const {colors} = useAppTheme();
 
+  const handleClose = () => {
+    if (typeof ref !== 'function' && ref?.current) {
+      ref.current.close();
+    }
+  };
+
   return (
     <View
       style={[
-        globalStyle.layoutDirection('row', 'center', 'center'),
-        {
-          paddingVertical: 20,
-          borderBottomWidth: 0.2,
-          borderColor: colors.text,
-          backgroundColor: colors.card,
-        },
+        styles.container,
+        {borderColor: colors.text, backgroundColor: colors.card},
       ]}>
       <Text style={globalStyle.textStyle('_18', colors.text, 'U_BOLD')}>
         Map Information
       </Text>
-
-      <Pressable
-        onPress={() => {
-          if (typeof ref !== 'function' && ref?.current) {
-            ref.current.close();
-          }
-        }}
-        style={{position: 'absolute', right: 20}}>
+      <Pressable onPress={handleClose} style={styles.closeButton}>
         <Text style={globalStyle.textStyle('_18', colors.text, 'U_MED')}>
           Close
         </Text>
       </Pressable>
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    borderBottomWidth: 0.2,
+  },
+  closeButton: {
+    position: 'absolute',
+    right: responsiveWidth(4),
+  },
 });

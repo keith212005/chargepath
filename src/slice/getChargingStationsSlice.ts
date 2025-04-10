@@ -5,9 +5,10 @@ import axios from 'axios';
 const initialState = {
   data: [],
   loading: false,
-  error: null,
+  error: null as string | null,
 };
 
+// Async thunk to fetch charging stations
 export const getChargingStations = createAsyncThunk(
   'getChargingStations/fetch',
   async (
@@ -15,7 +16,6 @@ export const getChargingStations = createAsyncThunk(
     thunkAPI,
   ) => {
     const BASE_URL = process.env.OPEN_CHARGE_MAP_BASE_URL as string;
-    console.log(BASE_URL, longitude, latitude);
 
     if (!latitude || !longitude) {
       console.error('Invalid latitude or longitude');
@@ -32,6 +32,7 @@ export const getChargingStations = createAsyncThunk(
       });
       return response.data;
     } catch (error: any) {
+      console.error('Error fetching charging stations:', error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   },
@@ -42,18 +43,19 @@ const getChargingStationsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(getChargingStations.pending, state => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(getChargingStations.fulfilled, (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-    });
-    builder.addCase(getChargingStations.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as null;
-    });
+    builder
+      .addCase(getChargingStations.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getChargingStations.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(getChargingStations.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string | null;
+      });
   },
 });
 

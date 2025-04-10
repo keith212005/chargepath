@@ -1,15 +1,8 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, StyleSheet, useWindowDimensions, View} from 'react-native';
+import React, {useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 import MapView, {Region} from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
-import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  interpolate,
-  Extrapolation,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import {
   FloatingButton,
@@ -19,15 +12,16 @@ import {
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
 import {MapOptionsList} from './mapOptionsList';
+import {AvailableStations} from './availableStations';
 
-import {responsiveHeight} from '@utils';
-import {useAppTheme} from '@hooks';
+import {
+  useAppTheme,
+  useBottomSheetAnimation,
+  useHandlePermissionStatus,
+} from '@hooks';
 import {useLocationPermissionAndRegion} from '@hooks';
-import {RESULTS} from 'react-native-permissions';
 import {useAppSelector} from '@store';
 import {Text} from 'react-native';
-import axios from 'axios';
-import {AvailableStations} from './availableStations';
 
 /**
  * The main map screen component.
@@ -38,91 +32,28 @@ import {AvailableStations} from './availableStations';
  * @returns The map screen component.
  */
 export const MapScreen = () => {
-  const {height} = useWindowDimensions();
   const {colors} = useAppTheme();
   const infoSheetRef = useRef<BottomSheetWrapperRef>(null);
-  const optionsSheetRef = useRef<BottomSheet>(null);
-  const sheetIndex = useSharedValue(0);
+  const optionsSheetRef = useRef<BottomSheetWrapperRef>(null);
+
   const mapRef = useRef<MapView>(null);
-  const {mapType, showTraffic, showScale} = useAppSelector(state => {
-    return state.mapType;
-  });
+  const {mapType, showTraffic, showScale} = useAppSelector(
+    state => state.mapType,
+  );
   const {region, permissionStatus, loading, refresh, openAppSettings} =
     useLocationPermissionAndRegion();
-
-  const animatedMapStyle = useAnimatedStyle(() => {
-    const bottomOffset = interpolate(
-      sheetIndex.value,
-      [0, 1, 2],
-      [130, height * 0.45, height * 0.45],
-      Extrapolation.CLAMP,
-    );
-    return {marginBottom: bottomOffset};
+  const {animatedMapStyle, handleAnimate} = useBottomSheetAnimation();
+  const {handlePermissionStatus} = useHandlePermissionStatus({
+    permissionStatus,
+    region,
+    mapRef: mapRef as React.RefObject<MapView>,
+    refresh,
+    openAppSettings,
   });
 
-  const handleAnimate = useCallback((fromIndex: number, toIndex: number) => {
-    if ([0, 1, 2].includes(toIndex)) {
-      sheetIndex.value = withTiming(toIndex, {duration: 500});
-    }
-  }, []);
-
-  const handlePermissionStatus = () => {
-    switch (permissionStatus) {
-      case RESULTS.BLOCKED:
-        Alert.alert(
-          'Location Permission',
-          'Please enable location permission in settings',
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            {
-              text: 'Settings',
-              onPress: () => openAppSettings(),
-            },
-          ],
-        );
-        break;
-
-      case RESULTS.GRANTED:
-        if (mapRef.current && region) {
-          mapRef.current.animateToRegion(
-            {
-              ...region,
-              latitudeDelta: 0.05,
-              longitudeDelta: 0.05,
-            },
-            1000,
-          );
-        } else {
-          Alert.alert('Error', 'Unable to center the map. Try again.');
-        }
-        break;
-
-      case RESULTS.DENIED:
-        Alert.alert(
-          'Location Permission',
-          'Location permission is denied. Please grant permission to use this feature.',
-          [
-            {
-              text: 'Cancel',
-              style: 'cancel',
-            },
-            {
-              text: 'Request Permission',
-              onPress: () => refresh(),
-            },
-          ],
-        );
-        break;
-
-      default:
-        Alert.alert('Error', 'Unable to determine permission status.');
-        break;
-    }
-  };
+  if (!region) {
+    <Text>Loading....</Text>;
+  }
 
   return (
     <View style={styles.container}>

@@ -20,6 +20,8 @@ export const MapInformationBody = () => {
     dispatch(actions[index](!selected));
   };
 
+  const handleMapTypeChange = (index: number) => dispatch(setMapType(index));
+
   const renderToggleRow = (
     label: string,
     selected: boolean,
@@ -34,51 +36,6 @@ export const MapInformationBody = () => {
         {label}
       </Text>
       <Switch color={colors.text} value={selected} onValueChange={onToggle} />
-    </View>
-  );
-
-  const handleMapTypeChange = (index: number) => dispatch(setMapType(index));
-
-  const MapLayers = () => (
-    <View
-      style={globalStyles.layoutDirection(
-        'column',
-        'flex-start',
-        'flex-start',
-      )}>
-      <Text
-        style={[
-          globalStyles.textStyle('_12', 'text', 'U_BOLD'),
-          styles.sectionTitle,
-        ]}>
-        MAP LAYERS
-      </Text>
-      <ButtonGroup
-        buttons={['Standard', 'Satellite', 'Hybrid']}
-        onPress={handleMapTypeChange}
-        selectedIndex={mapType.index}
-        containerStyle={[
-          styles.buttonGroupContainer,
-          {backgroundColor: colors.background},
-        ]}
-        selectedButtonStyle={{backgroundColor: colors.text}}
-        selectedTextStyle={globalStyles.textStyle(
-          '_15',
-          colors.background,
-          'U_BOLD',
-        )}
-        textStyle={globalStyles.textStyle('_15', colors.text, 'U_BOLD')}
-      />
-      <View style={[styles.mapLayersRowContainer, {borderColor: colors.text}]}>
-        {mapType.index !== 1 &&
-          renderToggleRow('Show Traffic', showTraffic, () =>
-            handleToggle(0, showTraffic),
-          )}
-        {mapType.index !== 1 && <Divider />}
-        {renderToggleRow('Show Scale', showScale, () =>
-          handleToggle(1, showScale),
-        )}
-      </View>
     </View>
   );
 
@@ -107,32 +64,72 @@ export const MapInformationBody = () => {
     </View>
   );
 
-  const MapLegends = () => {
-    return (
-      <View style={styles.legendsContainer}>
-        <Text style={globalStyles.textStyle('_12', 'text', 'U_BOLD')}>
-          MAP LEGENDS
-        </Text>
-        <View
-          style={[
-            globalStyles.layoutDirection('row', 'space-between', 'flex-start'),
-            styles.mapLegendRowContainer,
-            {borderColor: colors.text},
-          ]}>
-          <View style={styles.legendColumn}>
-            {LEGENDS.slice(0, 3).map(({label, iconType, iconName, iconColor}) =>
-              renderLegendRow(label, iconType, iconName, iconColor),
-            )}
-          </View>
-          <View style={styles.legendColumn}>
-            {LEGENDS.slice(3).map(({label, iconType, iconName, iconColor}) =>
-              renderLegendRow(label, iconType, iconName, iconColor),
-            )}
-          </View>
+  const MapLayers = () => (
+    <View style={[styles.sectionContainer]}>
+      <Text
+        style={[
+          globalStyles.textStyle('_12', 'text', 'U_BOLD'),
+          styles.sectionTitle,
+        ]}>
+        MAP LAYERS
+      </Text>
+      <ButtonGroup
+        buttons={['Standard', 'Satellite', 'Hybrid']}
+        onPress={handleMapTypeChange}
+        selectedIndex={mapType.index}
+        containerStyle={[
+          styles.buttonGroupContainer,
+          {backgroundColor: colors.card},
+        ]}
+        selectedButtonStyle={{backgroundColor: colors.text}}
+        selectedTextStyle={globalStyles.textStyle(
+          '_15',
+          colors.background,
+          'U_BOLD',
+        )}
+        textStyle={globalStyles.textStyle('_15', colors.text, 'U_BOLD')}
+      />
+      <View
+        style={[
+          styles.mapLayersRowContainer,
+          {borderColor: colors.text, backgroundColor: colors.card},
+        ]}>
+        {mapType.index !== 1 &&
+          renderToggleRow('Show Traffic', showTraffic, () =>
+            handleToggle(0, showTraffic),
+          )}
+        {mapType.index !== 1 && <Divider />}
+        {renderToggleRow('Show Scale', showScale, () =>
+          handleToggle(1, showScale),
+        )}
+      </View>
+    </View>
+  );
+
+  const MapLegends = () => (
+    <View style={styles.legendsContainer}>
+      <Text style={globalStyles.textStyle('_12', 'text', 'U_BOLD')}>
+        MAP LEGENDS
+      </Text>
+      <View
+        style={[
+          globalStyles.layoutDirection('row', 'space-between', 'flex-start'),
+          styles.mapLegendRowContainer,
+          {borderColor: colors.text, backgroundColor: colors.card},
+        ]}>
+        <View style={styles.legendColumn}>
+          {LEGENDS.slice(0, 3).map(({label, iconType, iconName, iconColor}) =>
+            renderLegendRow(label, iconType, iconName, iconColor),
+          )}
+        </View>
+        <View style={styles.legendColumn}>
+          {LEGENDS.slice(3).map(({label, iconType, iconName, iconColor}) =>
+            renderLegendRow(label, iconType, iconName, iconColor),
+          )}
         </View>
       </View>
-    );
-  };
+    </View>
+  );
 
   return (
     <View style={[styles.container, {backgroundColor: colors.background}]}>
@@ -146,6 +143,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+  },
+  sectionContainer: {
+    marginBottom: 20,
   },
   sectionTitle: {
     paddingVertical: 10,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     paddingVertical: responsiveHeight(1),
-    width: '100%',
+    // width: '100%',
   },
   legendsContainer: {
     marginTop: 20,
