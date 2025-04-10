@@ -17,6 +17,7 @@ module.exports = {
           '@slice': './src/slice',
           '@assets': './src/assets',
           '@hooks': './src/hooks',
+          '@signals': './src/signals',
         },
       },
     ],

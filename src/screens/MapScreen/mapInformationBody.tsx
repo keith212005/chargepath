@@ -57,7 +57,10 @@ export const MapInformationBody = () => {
         buttons={['Standard', 'Satellite', 'Hybrid']}
         onPress={handleMapTypeChange}
         selectedIndex={mapType.index}
-        containerStyle={styles.buttonGroupContainer}
+        containerStyle={[
+          styles.buttonGroupContainer,
+          {backgroundColor: colors.background},
+        ]}
         selectedButtonStyle={{backgroundColor: colors.text}}
         selectedTextStyle={globalStyles.textStyle(
           '_15',

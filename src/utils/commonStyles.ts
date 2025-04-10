@@ -14,7 +14,7 @@ const getGlobalStyles = (props: {colors: any}) => ({
       fontSize: moderateScale(FONT_SIZE[fontSize]),
       color: resolvedColor,
       fontFamily: FONTS[fontFamily],
-      letterSpacing: 1,
+      letterSpacing: 0.7,
     };
   },
   layoutDirection: (

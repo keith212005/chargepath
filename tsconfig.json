@@ -12,7 +12,8 @@
       "@store": ["./store"],
       "@slice": ["./slice"],
       "@assets": ["./assets"],
-      "@hooks": ["./hooks"]
+      "@hooks": ["./hooks"],
+      "@signals": ["./signals"]
     },
     "typeRoots": ["./types", "./node_modules/@types"]
   }

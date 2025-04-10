@@ -1,23 +1,37 @@
 import React from 'react';
-import {View} from 'react-native';
-import {useAppSelector} from '@store';
-import {NoInternetView} from '@components';
+import {Text, View} from 'react-native';
 import {useGlobalStyles} from '@utils';
 import {useAppTheme} from '@hooks';
+import {counter, resetCounter, usePersistedCounter} from '@signals';
+import {Button} from '@rneui/themed';
 
 export const TripsScreen = () => {
-  const isOnline = useAppSelector(state => state.network.isOnline);
   const globalStyle = useGlobalStyles();
   const {colors} = useAppTheme();
 
-  if (!isOnline) {
-    return <NoInternetView />;
-  }
+  usePersistedCounter(); // always put this hook at the end of other hooks to avoid side effects of other hooks like useEffect
+
   return (
     <View
       style={[
         globalStyle.layoutDirection('column', 'center', 'center'),
         {flex: 1, backgroundColor: colors.background},
-      ]}></View>
+      ]}>
+      <Text style={globalStyle.textStyle('_18', colors.text, 'U_BOLD')}>
+        Counter:{counter}
+      </Text>
+      <Button
+        title="Increment"
+        onPress={() => {
+          counter.value++;
+        }}
+      />
+      <Button
+        title="Reset Counter"
+        onPress={() => {
+          resetCounter();
+        }}
+      />
+    </View>
   );
 };

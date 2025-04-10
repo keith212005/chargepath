@@ -1,8 +1,8 @@
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, StyleSheet, useWindowDimensions, View} from 'react-native';
 import MapView, {Region} from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -18,13 +18,16 @@ import {
 } from '@components';
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
-import {MapOptionsHeader} from './mapOptionsHeader';
-import {MapOptionsBody} from './mapOptionsBody';
+import {MapOptionsList} from './mapOptionsList';
+
 import {responsiveHeight} from '@utils';
 import {useAppTheme} from '@hooks';
 import {useLocationPermissionAndRegion} from '@hooks';
 import {RESULTS} from 'react-native-permissions';
 import {useAppSelector} from '@store';
+import {Text} from 'react-native';
+import axios from 'axios';
+import {AvailableStations} from './availableStations';
 
 /**
  * The main map screen component.
@@ -168,14 +171,12 @@ export const MapScreen = () => {
 
       <BottomSheetWrapper
         ref={optionsSheetRef}
+        enableDynamicSizing={false}
         snapPoints={[130, '50%', '90%']}
-        enableDynamicSizing
         backgroundStyle={styles.sheetBorderRadius}
         onAnimate={handleAnimate}>
-        <View style={[styles.optionsBody, {backgroundColor: colors.accent}]}>
-          <MapOptionsHeader />
-          <MapOptionsBody />
-        </View>
+        <MapOptionsList />
+        <AvailableStations />
       </BottomSheetWrapper>
     </View>
   );
@@ -202,9 +203,5 @@ const styles = StyleSheet.create({
   },
   sheetBorderRadius: {
     borderRadius: 0,
-  },
-
-  optionsBody: {
-    paddingTop: responsiveHeight(2),
   },
 });

@@ -2,7 +2,10 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import {LoginScreen, SearchScreen} from '@screens';
 import {BottomTabNavigator} from './bottomTabNavigator';
 import {useNetworkStatus, useThemeListener} from '@hooks';
@@ -27,7 +30,7 @@ export const AppContainer = () => {
         <Host>
           <Stack.Navigator
             initialRouteName="Home"
-            screenOptions={{headerShown: false}}>
+            screenOptions={{headerShown: false, animation: 'fade'}}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Home" component={BottomTabNavigator} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />

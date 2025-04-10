@@ -28,6 +28,7 @@ const _colorDark = {
 const _commonColors = {
   black: '#121212',
   white: '#FFFFFF',
+  gray: 'rgb(113, 113, 116)',
 };
 
 export const MyDarkTheme = {

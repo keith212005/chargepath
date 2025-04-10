@@ -7,11 +7,10 @@ interface FloatingButtonProps extends FABProps {
   iconType: string;
   iconColor: string;
   backgroundColor: string;
-  onPress: () => void;
 }
 
 export const FloatingButton = (props: FloatingButtonProps) => {
-  const {iconName, iconType, iconColor, backgroundColor, onPress} = props;
+  const {iconName, iconType, iconColor, backgroundColor} = props;
 
   return (
     <View style={[styles.shadowContainer, {backgroundColor}]}>
@@ -19,7 +18,7 @@ export const FloatingButton = (props: FloatingButtonProps) => {
         activeOpacity={0.5}
         icon={{name: iconName, type: iconType, color: iconColor}}
         color={backgroundColor}
-        onPress={onPress}
+        {...props}
       />
     </View>
   );

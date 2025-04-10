@@ -34,16 +34,17 @@ export const BottomSheetWrapper = forwardRef<
     <BottomSheet
       ref={bottomSheetRef}
       onChange={handleSheetChanges}
-      {...props}
       handleIndicatorStyle={{
-        backgroundColor: colors.text,
+        backgroundColor: colors.icon,
+        width: 60,
+        height: 9,
       }}
-      backgroundStyle={{
+      handleStyle={{
         backgroundColor: colors.background,
-      }}>
-      <BottomSheetView style={[styles.contentContainer, {}]}>
-        {props.children}
-      </BottomSheetView>
+      }}
+      backgroundStyle={{backgroundColor: colors.card}}
+      {...props}>
+      {props.children}
     </BottomSheet>
   );
 });

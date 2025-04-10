@@ -3,11 +3,11 @@ import {MAP_OPTIONS_LIST} from '@constants';
 import {useAppTheme} from '@hooks';
 import {IconType} from '@rneui/base';
 import {FAB} from '@rneui/themed';
-import {responsiveWidth, useGlobalStyles} from '@utils';
+import {responsiveHeight, responsiveWidth, useGlobalStyles} from '@utils';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {navigate} from '@navigators';
 
-export const MapOptionsHeader = () => {
+export const MapOptionsList = () => {
   const globalStyles = useGlobalStyles();
   const {colors} = useAppTheme();
 
@@ -21,16 +21,20 @@ export const MapOptionsHeader = () => {
       <View
         style={[
           globalStyles.layoutDirection('column', 'center', 'center'),
-          {paddingHorizontal: responsiveWidth(2)},
+          {
+            paddingHorizontal: responsiveWidth(2),
+            paddingVertical: responsiveHeight(1.3),
+            borderBottomWidth: 0.2,
+            borderBottomColor: colors.gray,
+            backgroundColor: colors.background,
+          },
         ]}>
         <FAB
           icon={{name: iconName, type: iconType, color: iconColor}}
           color={colors.card}
-          onPress={() => {
-            navigate('SearchScreen', undefined);
-          }}
+          onPress={() => navigate('SearchScreen', undefined)}
           style={[styles.shadowContainer, {backgroundColor: colors.background}]}
-          containerStyle={{borderWidth: 0.2, borderColor: colors.text}}
+          containerStyle={{borderWidth: 0.5, borderColor: colors.gray}}
         />
         <Text
           style={[
@@ -44,26 +48,17 @@ export const MapOptionsHeader = () => {
   };
 
   return (
-    <>
+    <View>
       <FlatList
         data={MAP_OPTIONS_LIST}
-        horizontal
+        horizontal={true}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{}}
         renderItem={({item}) => {
-          return (
-            <>
-              {renderButton(
-                item.label,
-                item.iconType,
-                item.iconName,
-                colors.text,
-              )}
-            </>
-          );
+          const {label, iconType, iconName} = item;
+          return <>{renderButton(label, iconType, iconName, colors.text)}</>;
         }}
       />
-    </>
+    </View>
   );
 };
 

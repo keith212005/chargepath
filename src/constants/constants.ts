@@ -2,6 +2,16 @@ import {verticalScale} from 'react-native-size-matters';
 
 export const HEADER_HEIGHT = verticalScale(65);
 
+export const OPEN_CH_API_PARAMS = {
+  output: 'json',
+  maxresults: 20, // how many stations you want
+  distance: 10, // in km
+  distanceunit: 'KM',
+  compact: false,
+  verbose: true,
+  key: process.env.OPEN_CHARGE_MAP_API_KEY,
+};
+
 export const MAP_OPTIONS_LIST = [
   {
     id: 1,

@@ -14,6 +14,7 @@ import {goBack} from '@navigators';
 const query = {
   key: process.env.GOOGLE_MAPS_API_KEY,
   language: 'en',
+  types: 'address',
 };
 
 export const SearchScreen = () => {
@@ -41,11 +42,11 @@ export const SearchScreen = () => {
           placeholder="Search"
           minLength={2} // minimum length of text to search
           predefinedPlaces={[]}
-          fetchDetails={true}
-          debounce={500}
+          debounce={200}
           query={query}
-          onPress={(data, details = null) => {
-            console.log(data, details);
+          fetchDetails={true}
+          onPress={(data, details) => {
+            // console.log('Coordinates:', lat, lng);
           }}
           onFail={error => console.error(error)}
           textInputProps={{
@@ -78,7 +79,8 @@ export const SearchScreen = () => {
             textInput: {
               borderWidth: 1, // This is the border of the input
             },
-          }}></GooglePlacesAutocomplete>
+          }}
+        />
       </View>
     );
   };

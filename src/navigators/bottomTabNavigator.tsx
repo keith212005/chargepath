@@ -21,8 +21,11 @@ export const BottomTabNavigator = () => {
     return (
       <Tab.Screen
         options={{
+          animation: 'fade',
           headerShown: name === 'Map' ? false : true,
           tabBarIcon: ({focused, size}) => {
+            let iconColor = focused ? colors.text : colors.icon;
+
             switch (name) {
               case 'Map':
                 iconName = focused ? 'map' : 'map-outline';
@@ -46,14 +49,15 @@ export const BottomTabNavigator = () => {
               <Icon
                 name={iconName}
                 type={iconType}
-                color={colors.text}
+                color={iconColor}
                 size={size}
               />
             );
           },
-          tabBarLabel: () => {
+          tabBarLabel: ({focused}) => {
+            let textColor = focused ? colors.text : colors.icon;
             return (
-              <Text style={[globalStyle.textStyle('_9', colors.text, 'U_MED')]}>
+              <Text style={[globalStyle.textStyle('_9', textColor, 'U_MED')]}>
                 {name}
               </Text>
             );
@@ -66,10 +70,7 @@ export const BottomTabNavigator = () => {
   };
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: {borderTopColor: '#8E8E93'},
-      }}>
+    <Tab.Navigator screenOptions={{tabBarStyle: {borderTopColor: '#8E8E93'}}}>
       {renderTab('Map', MapScreen, 'map', 'ionicons')}
       {renderTab('Trips', TripsScreen, 'car-alt', 'font-awesome-5')}
       {renderTab('Bookmarks', BookmarksScreen, 'bookmark', 'font-awesome')}
