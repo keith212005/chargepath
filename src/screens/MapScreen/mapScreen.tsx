@@ -1,6 +1,6 @@
-import React, {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
-import MapView, {Region} from 'react-native-maps';
+import React, {useEffect, useRef} from 'react';
+import {Alert, Platform, StyleSheet, View} from 'react-native';
+import MapView from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
 import Animated from 'react-native-reanimated';
 
@@ -8,88 +8,81 @@ import {
   FloatingButton,
   BottomSheetWrapper,
   BottomSheetWrapperRef,
+  CustomMapView,
 } from '@components';
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
 import {MapOptionsList} from './mapOptionsList';
 import {AvailableStations} from './availableStations';
 
-import {
-  useAppTheme,
-  useBottomSheetAnimation,
-  useHandlePermissionStatus,
-} from '@hooks';
-import {useLocationPermissionAndRegion} from '@hooks';
-import {useAppSelector} from '@store';
+import {useAppTheme, useBottomSheetAnimation} from '@hooks';
+import {useAppDispatch, useAppSelector} from '@store';
+import {getInitialRegion} from '@slice';
 import {Text} from 'react-native';
 
-/**
- * The main map screen component.
- *
- * This component renders a map view, a floating button container with two buttons,
- * and two bottom sheets for displaying map information and map options.
- *
- * @returns The map screen component.
- */
 export const MapScreen = () => {
   const {colors} = useAppTheme();
+  const dispatch = useAppDispatch();
   const infoSheetRef = useRef<BottomSheetWrapperRef>(null);
   const optionsSheetRef = useRef<BottomSheetWrapperRef>(null);
-
   const mapRef = useRef<MapView>(null);
-  const {mapType, showTraffic, showScale} = useAppSelector(
-    state => state.mapType,
-  );
-  const {region, permissionStatus, loading, refresh, openAppSettings} =
-    useLocationPermissionAndRegion();
+  const region = useAppSelector(state => state.region);
+  const {status} = useAppSelector(state => state.locationPermission);
   const {animatedMapStyle, handleAnimate} = useBottomSheetAnimation();
-  const {handlePermissionStatus} = useHandlePermissionStatus({
-    permissionStatus,
-    region,
-    mapRef: mapRef as React.RefObject<MapView>,
-    refresh,
-    openAppSettings,
-  });
 
+  // Handle location permission and fetch initial region
+  useEffect(() => {
+    if (status === 'GRANTED') {
+      dispatch(getInitialRegion())
+        .unwrap()
+        .then(region => {
+          mapRef.current?.animateToRegion(region, 1000);
+        })
+        .catch(error => {
+          console.error('Failed to fetch initial region:', error);
+        });
+    } else {
+      console.warn('Permission not granted:', status);
+    }
+  }, [status, dispatch]);
+
+  // Render loading state if region is not available
   if (!region) {
-    <Text>Loading....</Text>;
+    return <Text>Loading...</Text>;
   }
+
+  // Floating buttons component
+  const FloatingButtons = () => (
+    <View style={styles.floatingButtonWrapper}>
+      <View style={styles.floatingButtonContainer}>
+        <FloatingButton
+          iconName="layer-group"
+          iconType="font-awesome-5"
+          iconColor={colors.text}
+          backgroundColor={colors.card}
+          onPress={() => infoSheetRef.current?.expand()}
+          accessible
+          accessibilityLabel="Open map layers"
+        />
+        <FloatingButton
+          iconName="my-location"
+          iconType="material"
+          iconColor={colors.text}
+          backgroundColor={colors.card}
+          // Add functionality for "my-location" button if needed
+        />
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
-        <MapView
-          showsScale={showScale}
-          mapType={mapType.type}
-          showsTraffic={showTraffic}
-          ref={mapRef} // Step 2: Update MapView component
-          showsUserLocation={true}
-          loadingEnabled={loading}
-          style={StyleSheet.absoluteFillObject}
-          region={region as Region | undefined}
-        />
-        <View style={styles.floatingButtonWrapper}>
-          <View style={styles.floatingButtonContainer}>
-            <FloatingButton
-              iconName="layer-group"
-              iconType="font-awesome-5"
-              iconColor={colors.text}
-              backgroundColor={colors.card}
-              onPress={() => infoSheetRef.current?.expand()}
-              accessible={true}
-              accessibilityLabel="Open map layers"
-            />
-            <FloatingButton
-              iconName="my-location"
-              iconType="material"
-              iconColor={colors.text}
-              backgroundColor={colors.card}
-              onPress={handlePermissionStatus}
-            />
-          </View>
-        </View>
+        <CustomMapView ref={mapRef} />
+        <FloatingButtons />
       </Animated.View>
 
+      {/* Map Information BottomSheet */}
       <Portal>
         <BottomSheetWrapper
           ref={infoSheetRef}
@@ -100,6 +93,7 @@ export const MapScreen = () => {
         </BottomSheetWrapper>
       </Portal>
 
+      {/* Options BottomSheet */}
       <BottomSheetWrapper
         ref={optionsSheetRef}
         enableDynamicSizing={false}

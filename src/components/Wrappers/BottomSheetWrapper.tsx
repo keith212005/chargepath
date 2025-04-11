@@ -22,7 +22,7 @@ export const BottomSheetWrapper = forwardRef<
 
   // Handle BottomSheet changes
   const handleSheetChanges = useCallback((index: number) => {
-    console.log('BottomSheet index changed:', index);
+    // console.log('BottomSheet index changed useCallback:', index);
   }, []);
 
   // Expose methods to parent components

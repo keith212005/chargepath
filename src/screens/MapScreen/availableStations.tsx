@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {Divider} from '@rneui/themed';
-import {useAppTheme, useLocationPermissionAndRegion} from '@hooks';
-import {useAppDispatch, useAppSelector} from '@store';
-import {getChargingStations} from '@slice';
+import {useAppTheme} from '@hooks';
+import {useAppSelector} from '@store';
 import {
   calculateDistance,
   getPlugScore,
@@ -16,18 +15,9 @@ import {
 import {GreenChargerMarker, OrangeChargerMarker} from '@assets';
 
 export const AvailableStations = () => {
-  const dispatch = useAppDispatch();
   const {colors} = useAppTheme();
   const globalStyles = useGlobalStyles();
   const stationList = useAppSelector(state => state.stationList.data);
-  const {region} = useLocationPermissionAndRegion();
-
-  useEffect(() => {
-    if (region) {
-      const {latitude, longitude} = region;
-      dispatch(getChargingStations({latitude, longitude}));
-    }
-  }, [region]);
 
   const renderListItem = ({item}: any) => {
     const totalChargers = getTotalChargers(item.Connections);

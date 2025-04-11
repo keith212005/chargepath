@@ -8,7 +8,11 @@ import {
 } from '@react-navigation/native-stack';
 import {LoginScreen, SearchScreen} from '@screens';
 import {BottomTabNavigator} from './bottomTabNavigator';
-import {useNetworkStatus, useThemeListener} from '@hooks';
+import {
+  useNetworkStatus,
+  usePermissionListener,
+  useThemeListener,
+} from '@hooks';
 import {useAppSelector} from '@store';
 import {LightTheme, MyDarkTheme} from '@constants';
 import {Host} from 'react-native-portalize';
@@ -20,6 +24,8 @@ const Stack = createNativeStackNavigator();
 export const AppContainer = () => {
   useNetworkStatus(); // starts network status listener
   useThemeListener(); // starts theme listener
+  usePermissionListener(); // starts permission listener
+
   const theme = useAppSelector(state => state.theme.currentTheme);
 
   return (

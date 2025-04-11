@@ -6,22 +6,24 @@ import {
   networkReducer,
   themeReducer,
   userReducer,
-  currentLocationReducer,
+  currentRegionReducer,
   mapTypeReducer,
   getChargingStationsReducer,
+  locationPermissionReducer,
 } from '@slice';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['isOnline'],
+  blacklist: ['isOnline', 'region', 'locationPermission', 'stationList'],
 };
 
 const rootReducer = combineReducers({
   network: networkReducer,
   user: userReducer,
   theme: themeReducer,
-  currentLocation: currentLocationReducer,
+  locationPermission: locationPermissionReducer,
+  region: currentRegionReducer,
   mapType: mapTypeReducer,
   stationList: getChargingStationsReducer,
 });

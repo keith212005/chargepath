@@ -4,8 +4,8 @@ export const HEADER_HEIGHT = verticalScale(65);
 
 export const OPEN_CH_API_PARAMS = {
   output: 'json',
-  maxresults: 20, // how many stations you want
-  distance: 10, // in km
+  maxresults: 50, // how many stations you want
+  distance: 20, // in km
   distanceunit: 'KM',
   compact: false,
   verbose: true,

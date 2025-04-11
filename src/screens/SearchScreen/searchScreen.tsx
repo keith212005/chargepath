@@ -45,9 +45,7 @@ export const SearchScreen = () => {
           debounce={200}
           query={query}
           fetchDetails={true}
-          onPress={(data, details) => {
-            // console.log('Coordinates:', lat, lng);
-          }}
+          onPress={(data, details) => {}}
           onFail={error => console.error(error)}
           textInputProps={{
             InputComp: Input,
