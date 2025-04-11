@@ -36,7 +36,7 @@ export const MapScreen = () => {
       dispatch(getInitialRegion())
         .unwrap()
         .then(region => {
-          mapRef.current?.animateToRegion(region, 1000);
+          // mapRef.current?.animateToRegion(region, 1000);
         })
         .catch(error => {
           console.error('Failed to fetch initial region:', error);

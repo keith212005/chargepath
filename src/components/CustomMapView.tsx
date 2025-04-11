@@ -1,4 +1,11 @@
-import React, {forwardRef, memo, useEffect, useMemo, useRef} from 'react';
+import React, {
+  forwardRef,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
 import MapView, {MapViewProps, Marker} from 'react-native-maps';
 import {useAppDispatch, useAppSelector} from '@store';
@@ -6,6 +13,7 @@ import {Text} from 'react-native';
 import {getChargingStations, setCurrentRegion} from '@slice';
 import {View} from 'react-native';
 import {useAppTheme} from '@hooks';
+import {debounce} from 'lodash';
 
 export const CustomMapViewComponent = forwardRef<MapView, MapViewProps>(
   (props, ref) => {
@@ -40,6 +48,14 @@ export const CustomMapViewComponent = forwardRef<MapView, MapViewProps>(
 
       return () => clearTimeout(timeout);
     }, [region]);
+
+    const handleRegionChangeComplete = useCallback(
+      debounce(region => {
+        console.log('Debounced onRegionChangeComplete:', region);
+        dispatch(setCurrentRegion(region));
+      }, 200), // 500ms debounce
+      [dispatch],
+    );
 
     const renderMarkers = useMemo(() => {
       return stationList?.map((station: any) => {
@@ -80,11 +96,7 @@ export const CustomMapViewComponent = forwardRef<MapView, MapViewProps>(
           showsScale={showScale}
           showsUserLocation
           region={region || undefined}
-          onRegionChangeComplete={region => {
-            console.log(region);
-
-            dispatch(setCurrentRegion(region));
-          }}
+          onRegionChangeComplete={handleRegionChangeComplete}
           {...props}>
           {renderMarkers}
         </MapView>
