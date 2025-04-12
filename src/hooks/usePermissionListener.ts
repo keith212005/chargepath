@@ -16,7 +16,17 @@ const getPermissionType = () => {
     : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 };
 
-// This hook is used when the app starts in the App Component
+/**
+ * A hook that listens to AppState changes and checks location permission status.
+ *
+ * It checks the location permission status when the app becomes active and
+ * dispatches the status to the store. If the permission is denied, it requests
+ * the permission again and handles the result accordingly. If the permission
+ * is blocked or unavailable, it shows an alert to open the settings.
+ *
+ * The hook also handles cases where the permission is limited or not granted
+ * or invalid status.
+ */
 export const usePermissionListener = () => {
   const dispatch = useDispatch();
 
@@ -57,21 +67,6 @@ export const usePermissionListener = () => {
       } else if (newStatus === RESULTS.DENIED) {
         dispatch(setPermissionStatus('DENIED'));
         console.warn('Permission denied again.');
-        // Alert.alert(
-        //   'Location Permission Required',
-        //   'This app requires location permission to function properly. Please grant the permission.',
-        //   [
-        //     {
-        //       text: 'Cancel',
-        //       onPress: () => console.log('Permission request canceled'),
-        //       style: 'cancel',
-        //     },
-        //     {
-        //       text: 'Try Again',
-        //       onPress: () => checkLocationPermission(),
-        //     },
-        //   ],
-        // );
       } else if (newStatus === RESULTS.BLOCKED) {
         dispatch(setPermissionStatus('BLOCKED'));
       }
@@ -103,8 +98,6 @@ export const usePermissionListener = () => {
     // Initial check when the app starts
     checkLocationPermission();
 
-    return () => {
-      subscription.remove();
-    };
+    return () => subscription.remove();
   }, [dispatch]);
 };

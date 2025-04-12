@@ -3,15 +3,16 @@ import {useAppDispatch} from '@store';
 import {useEffect} from 'react';
 import {Appearance, ColorSchemeName} from 'react-native';
 
+/**
+ * Listens to changes in the device's color scheme, and dispatches an action to
+ * update the theme in the store.
+ *
+ * @returns {void}
+ */
 export const useThemeListener = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Set initial theme
-    // const currentTheme: ColorSchemeName = Appearance.getColorScheme();
-    // dispatch(setTheme(currentTheme ?? 'light'));
-
-    // Listener
     const subscription = Appearance.addChangeListener(
       (preferences: Appearance.AppearancePreferences) => {
         const theme: ColorSchemeName = preferences.colorScheme;

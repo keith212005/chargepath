@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {Alert, Platform, StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import MapView from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
 import Animated from 'react-native-reanimated';
@@ -29,6 +29,7 @@ export const MapScreen = () => {
   const region = useAppSelector(state => state.region);
   const {status} = useAppSelector(state => state.locationPermission);
   const {animatedMapStyle, handleAnimate} = useBottomSheetAnimation();
+  const {selectedStation} = useAppSelector(state => state.selectedStation);
 
   // Handle location permission and fetch initial region
   useEffect(() => {
@@ -44,7 +45,7 @@ export const MapScreen = () => {
     } else {
       console.warn('Permission not granted:', status);
     }
-  }, [status, dispatch]);
+  }, [status]);
 
   // Render loading state if region is not available
   if (!region) {
@@ -77,9 +78,9 @@ export const MapScreen = () => {
 
   return (
     <View style={styles.container}>
+      <CustomMapView ref={mapRef} />
       <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
-        <CustomMapView ref={mapRef} />
-        <FloatingButtons />
+        {!selectedStation && <FloatingButtons />}
       </Animated.View>
 
       {/* Map Information BottomSheet */}
@@ -97,7 +98,7 @@ export const MapScreen = () => {
       <BottomSheetWrapper
         ref={optionsSheetRef}
         enableDynamicSizing={false}
-        snapPoints={[130, '50%', '90%']}
+        snapPoints={[40, 130, '50%', '90%']}
         backgroundStyle={styles.sheetBorderRadius}
         onAnimate={handleAnimate}>
         <MapOptionsList />
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   mapContainer: {
-    flex: 1,
+    // flex: 1,
   },
   floatingButtonWrapper: {
     position: 'absolute',

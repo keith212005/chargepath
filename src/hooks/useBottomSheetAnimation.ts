@@ -15,7 +15,7 @@ export const useBottomSheetAnimation = () => {
     const bottomOffset = interpolate(
       sheetIndex.value,
       [0, 1, 2],
-      [130, height * 0.45, height * 0.45],
+      [40, 130, height * 0.45, height * 0.45],
       Extrapolation.CLAMP,
     );
     return {marginBottom: bottomOffset};

@@ -5,3 +5,4 @@ export * from './currentRegionSlice';
 export * from './mapTypeSlice';
 export * from './getChargingStationsSlice';
 export * from './locationPermissionSlice';
+export * from './selectedStationSlice';

@@ -46,9 +46,12 @@ export const calculateDistance = (station: Station): string => {
   const rawDistance = station.AddressInfo?.Distance || 0;
   const distanceInKm = isMiles ? rawDistance * 1.60934 : rawDistance;
 
-  return distanceInKm < 1
-    ? `${Math.round(distanceInKm * 1000)} m`
-    : `${distanceInKm.toFixed(1)} km`;
+  const distance =
+    distanceInKm < 1
+      ? `${Math.round(distanceInKm * 1000)} m`
+      : `${distanceInKm.toFixed(1)} km`;
+
+  return distance;
 };
 
 export const getTotalChargers = (connections: Connection[]): number =>
@@ -63,3 +66,13 @@ export const getPlugTypes = (connections: Connection[]): string =>
 
 export const hasFastCharger = (connections: Connection[]): boolean =>
   connections?.some(conn => conn.Level?.IsFastChargeCapable === true);
+
+export const shouldUpdateRegion = (prev: any, newRegion: any) => {
+  const hasChanged =
+    !prev ||
+    Math.abs(prev.latitude - newRegion.latitude) > 0.0001 ||
+    Math.abs(prev.longitude - newRegion.longitude) > 0.0001;
+  console.log('hasChanged', hasChanged);
+
+  return hasChanged;
+};

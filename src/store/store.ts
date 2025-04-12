@@ -10,12 +10,19 @@ import {
   mapTypeReducer,
   getChargingStationsReducer,
   locationPermissionReducer,
+  selectedStationReducer,
 } from '@slice';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['isOnline', 'region', 'locationPermission', 'stationList'],
+  blacklist: [
+    'isOnline',
+    'region',
+    'locationPermission',
+    'stationList',
+    'selectedStation',
+  ],
 };
 
 const rootReducer = combineReducers({
@@ -26,6 +33,7 @@ const rootReducer = combineReducers({
   region: currentRegionReducer,
   mapType: mapTypeReducer,
   stationList: getChargingStationsReducer,
+  selectedStation: selectedStationReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

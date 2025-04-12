@@ -42,11 +42,17 @@ export const SearchScreen = () => {
           placeholder="Search"
           minLength={2} // minimum length of text to search
           predefinedPlaces={[]}
-          debounce={200}
+          debounce={500}
           query={query}
-          fetchDetails={true}
           onPress={(data, details) => {}}
+          fetchDetails={true}
+          GooglePlacesSearchQuery={{
+            rankby: '',
+            types: 'restaurant',
+          }}
+          onNotFound={() => <Text>No Results</Text>}
           onFail={error => console.error(error)}
+          keyboardShouldPersistTaps="always"
           textInputProps={{
             InputComp: Input,
             leftIcon: {
