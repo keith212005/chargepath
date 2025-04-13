@@ -49,13 +49,7 @@ export const MapScreen = () => {
   // Fetch initial region when location permission is granted
   useEffect(() => {
     if (status === 'GRANTED') {
-      dispatch(getInitialRegion())
-        .unwrap()
-        .catch(error =>
-          console.error('Failed to fetch initial region:', error),
-        );
-    } else {
-      console.warn('Permission not granted:', status);
+      dispatch(getInitialRegion());
     }
   }, [status, dispatch]);
 
@@ -92,30 +86,6 @@ export const MapScreen = () => {
     }, 200);
   }, [dispatch]);
 
-  // Floating buttons component
-  const FloatingButtons = () => (
-    <View style={styles.floatingButtonWrapper}>
-      <View style={styles.floatingButtonContainer}>
-        <FloatingButton
-          iconName="layer-group"
-          iconType="font-awesome-5"
-          iconColor={colors.text}
-          backgroundColor={colors.card}
-          onPress={() => mapInfoRef.current?.expand()}
-          accessible
-          accessibilityLabel="Open map layers"
-        />
-        <FloatingButton
-          iconName="my-location"
-          iconType="material"
-          iconColor={colors.text}
-          backgroundColor={colors.card}
-          // Add functionality for "my-location" button if needed
-        />
-      </View>
-    </View>
-  );
-
   // Render loading state if region is not available
   if (!region) {
     return <Text>Loading...</Text>;
@@ -130,9 +100,37 @@ export const MapScreen = () => {
         onPressMarker={handleMarkerPress}
       />
 
-      {/* Floating Buttons */}
+      {/* This View is used for map animation do not remove */}
       <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
-        {!selectedStation && <FloatingButtons />}
+        {/* {!selectedStation && <FloatingButtons />} */}
+      </Animated.View>
+
+      <Animated.View style={[styles.stachIconStyle, animatedMapStyle]}>
+        {!selectedStation && (
+          <FloatingButton
+            iconName="layer-group"
+            iconType="font-awesome-5"
+            iconColor={colors.text}
+            backgroundColor={colors.card}
+            onPress={() => mapInfoRef.current?.expand()}
+            accessible
+            accessibilityLabel="Open map layers"
+          />
+        )}
+      </Animated.View>
+
+      <Animated.View style={[styles.locationIconStyle, animatedMapStyle]}>
+        {!selectedStation && (
+          <FloatingButton
+            iconName="my-location"
+            iconType="material"
+            iconColor={colors.text}
+            backgroundColor={colors.card}
+            onPress={() => mapInfoRef.current?.expand()}
+            accessible
+            accessibilityLabel="Open map layers"
+          />
+        )}
       </Animated.View>
 
       {/* Map Information BottomSheet */}
@@ -150,7 +148,7 @@ export const MapScreen = () => {
       <BottomSheetWrapper
         ref={selectedStationRef}
         index={-1} // Start in a closed state
-        snapPoints={['27%']}
+        snapPoints={['37%']}
         enablePanDownToClose={true}
         handleStyle={{borderRadius: 20, backgroundColor: colors.card}}
         handleIndicatorStyle={{height: 0, width: 0}}
@@ -188,11 +186,25 @@ const styles = StyleSheet.create({
     left: 0,
   },
   floatingButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // padding: 20,
   },
   sheetBorderRadius: {
     borderRadius: 0,
+  },
+  stachIconStyle: {
+    borderRadius: 80,
+    alignSelf: 'flex-start',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  locationIconStyle: {
+    borderRadius: 80,
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
 });

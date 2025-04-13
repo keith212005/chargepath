@@ -25,7 +25,8 @@ export const CustomMarker = memo(
 
     return (
       <Marker
-        key={station.uuid}
+        key={`${station.uuid}-${isSelected}`}
+        zIndex={isSelected ? 1 : -1}
         coordinate={{latitude: lat, longitude: lng}}
         tracksViewChanges={isSelected}
         onPress={() => onMarkerPress(station)}>
@@ -49,7 +50,7 @@ const MarkerIcon = memo(
     isFastCharger: boolean;
     isSelected: boolean;
   }) => {
-    const size = isSelected ? 40 : 26;
+    const size = isSelected ? 36 : 26;
     const MarkerComponent = isFastCharger
       ? OrangeChargerMarker
       : GreenChargerMarker;

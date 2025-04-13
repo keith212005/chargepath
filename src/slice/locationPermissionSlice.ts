@@ -2,10 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 import {RESULTS, PERMISSIONS} from 'react-native-permissions';
 
 // Define the type for permissionStatus
-type PermissionStatus = keyof typeof RESULTS;
+type PermissionStatus = keyof typeof RESULTS | null;
 
 const initialState: {status: PermissionStatus} = {
-  status: 'BLOCKED', // Default value from RESULTS
+  status: null, // Default value from RESULTS
 };
 
 export const locationPermissionSlice = createSlice({

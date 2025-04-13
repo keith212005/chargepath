@@ -54,10 +54,11 @@ export const BottomTabNavigator = () => {
               />
             );
           },
+          tabBarStyle: {height: 86},
           tabBarLabel: ({focused}) => {
             let textColor = focused ? colors.text : colors.icon;
             return (
-              <Text style={[globalStyle.textStyle('_9', textColor, 'U_MED')]}>
+              <Text style={[globalStyle.textStyles('labelXSmall', textColor)]}>
                 {name}
               </Text>
             );

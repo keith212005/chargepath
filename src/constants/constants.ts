@@ -25,7 +25,7 @@ export const REGION_DELTA = (lat: any, long: any) => {
 export const MAP_OPTIONS_LIST = [
   {
     id: 1,
-    label: 'Search',
+    label: 'Coffee',
     iconType: 'feather',
     iconName: 'search',
   },

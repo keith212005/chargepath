@@ -58,7 +58,7 @@ export const CustomMapViewComponent = forwardRef<
         regionRef.current = newRegion;
         dispatch(setCurrentRegion(newRegion));
       }
-    }, 200),
+    }, 500),
     [dispatch],
   );
 

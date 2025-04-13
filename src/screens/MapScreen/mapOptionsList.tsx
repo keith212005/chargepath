@@ -37,9 +37,8 @@ export const MapOptionsList = () => {
       />
       <Text
         style={[
-          globalStyles.textStyle('_12', 'text', 'U_REG'),
+          globalStyles.textStyles('labelSmall', 'text'),
           styles.buttonLabel,
-          {color: colors.text},
         ]}>
         {label}
       </Text>
@@ -69,7 +68,7 @@ export const MapOptionsList = () => {
 const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: responsiveWidth(2),
-    paddingVertical: responsiveHeight(1.3),
+    paddingVertical: responsiveHeight(1.7),
     borderBottomWidth: 0.2,
   },
   buttonLabel: {
