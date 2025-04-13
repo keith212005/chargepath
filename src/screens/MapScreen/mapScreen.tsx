@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import MapView from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
 import Animated from 'react-native-reanimated';
@@ -9,6 +9,7 @@ import {
   BottomSheetWrapper,
   BottomSheetWrapperRef,
   CustomMapView,
+  SelectedStationCard,
 } from '@components';
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
@@ -17,40 +18,79 @@ import {AvailableStations} from './availableStations';
 
 import {useAppTheme, useBottomSheetAnimation} from '@hooks';
 import {useAppDispatch, useAppSelector} from '@store';
-import {getInitialRegion} from '@slice';
-import {Text} from 'react-native';
+import {
+  clearSelectedStationAsync,
+  getInitialRegion,
+  setSelectedStationAsync,
+} from '@slice';
 
 export const MapScreen = () => {
   const {colors} = useAppTheme();
   const dispatch = useAppDispatch();
-  const infoSheetRef = useRef<BottomSheetWrapperRef>(null);
-  const optionsSheetRef = useRef<BottomSheetWrapperRef>(null);
+
+  // Refs for BottomSheets and MapView
+  const mapInfoRef = useRef<BottomSheetWrapperRef | null>(null);
+  const optionsRef = useRef<BottomSheetWrapperRef | null>(null);
+  const selectedStationRef = useRef<BottomSheetWrapperRef>(null);
   const mapRef = useRef<MapView>(null);
+
+  // State and Redux Selectors
   const region = useAppSelector(state => state.region);
   const {status} = useAppSelector(state => state.locationPermission);
   const {animatedMapStyle, handleAnimate} = useBottomSheetAnimation();
   const {selectedStation} = useAppSelector(state => state.selectedStation);
 
-  // Handle location permission and fetch initial region
+  // Flags for Map and Marker Presses
+  const mapPressedRef = useRef(false);
+  const markerPressedRef = useRef(false);
+
+  console.log(region);
+
+  // Fetch initial region when location permission is granted
   useEffect(() => {
     if (status === 'GRANTED') {
       dispatch(getInitialRegion())
         .unwrap()
-        .then(region => {
-          // mapRef.current?.animateToRegion(region, 1000);
-        })
-        .catch(error => {
-          console.error('Failed to fetch initial region:', error);
-        });
+        .catch(error =>
+          console.error('Failed to fetch initial region:', error),
+        );
     } else {
       console.warn('Permission not granted:', status);
     }
-  }, [status]);
+  }, [status, dispatch]);
 
-  // Render loading state if region is not available
-  if (!region) {
-    return <Text>Loading...</Text>;
-  }
+  // Handle map press to clear selected station
+  const onMapPress = useCallback(() => {
+    if (!markerPressedRef.current && selectedStation) {
+      dispatch(clearSelectedStationAsync()).then(() => {
+        selectedStationRef.current?.close();
+      });
+    }
+    markerPressedRef.current = false;
+    mapPressedRef.current = false;
+  }, [dispatch, selectedStation]);
+
+  // Handle marker press to select a station
+  const handleMarkerPress = useCallback(
+    (station: any) => {
+      markerPressedRef.current = true;
+      setTimeout(() => {
+        dispatch(setSelectedStationAsync(station)).then(() => {
+          selectedStationRef.current?.expand();
+        });
+      }, 100);
+    },
+    [dispatch],
+  );
+
+  // Clear selected station and close the bottom sheet
+  const clearStationCard = useCallback(() => {
+    setTimeout(() => {
+      dispatch(clearSelectedStationAsync()).then(() => {
+        selectedStationRef.current?.close();
+      });
+    }, 200);
+  }, [dispatch]);
 
   // Floating buttons component
   const FloatingButtons = () => (
@@ -61,7 +101,7 @@ export const MapScreen = () => {
           iconType="font-awesome-5"
           iconColor={colors.text}
           backgroundColor={colors.card}
-          onPress={() => infoSheetRef.current?.expand()}
+          onPress={() => mapInfoRef.current?.expand()}
           accessible
           accessibilityLabel="Open map layers"
         />
@@ -76,9 +116,21 @@ export const MapScreen = () => {
     </View>
   );
 
+  // Render loading state if region is not available
+  if (!region) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <View style={styles.container}>
-      <CustomMapView ref={mapRef} />
+      {/* Custom MapView */}
+      <CustomMapView
+        ref={mapRef}
+        onPress={onMapPress}
+        onPressMarker={handleMarkerPress}
+      />
+
+      {/* Floating Buttons */}
       <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
         {!selectedStation && <FloatingButtons />}
       </Animated.View>
@@ -86,18 +138,33 @@ export const MapScreen = () => {
       {/* Map Information BottomSheet */}
       <Portal>
         <BottomSheetWrapper
-          ref={infoSheetRef}
+          ref={mapInfoRef}
           snapPoints={[1, '95%']}
           backgroundStyle={styles.sheetBorderRadius}>
-          <MapInfomationHeader ref={infoSheetRef} />
+          <MapInfomationHeader ref={mapInfoRef} />
           <MapInformationBody />
         </BottomSheetWrapper>
       </Portal>
 
+      {/* Selected Station BottomSheet */}
+      <BottomSheetWrapper
+        ref={selectedStationRef}
+        index={-1} // Start in a closed state
+        snapPoints={['27%']}
+        enablePanDownToClose={true}
+        handleStyle={{borderRadius: 20, backgroundColor: colors.card}}
+        handleIndicatorStyle={{height: 0, width: 0}}
+        detached={true}
+        containerStyle={{marginHorizontal: 20}}
+        backgroundStyle={{borderRadius: 10, marginBottom: 60}}>
+        <SelectedStationCard onCardClose={clearStationCard} />
+      </BottomSheetWrapper>
+
       {/* Options BottomSheet */}
       <BottomSheetWrapper
-        ref={optionsSheetRef}
+        ref={optionsRef}
         enableDynamicSizing={false}
+        index={selectedStation ? 0 : 1}
         snapPoints={[40, 130, '50%', '90%']}
         backgroundStyle={styles.sheetBorderRadius}
         onAnimate={handleAnimate}>
@@ -113,9 +180,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
   },
-  mapContainer: {
-    // flex: 1,
-  },
+  mapContainer: {},
   floatingButtonWrapper: {
     position: 'absolute',
     bottom: 2,

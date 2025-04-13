@@ -1,38 +1,38 @@
 type Connection = {
-  PowerKW?: number;
-  Level?: {IsFastChargeCapable?: boolean};
-  CurrentType?: {Title?: string};
-  StatusType?: {Title?: string};
-  ConnectionType?: {Title?: string};
-  Quantity?: number;
+  powerKW?: number;
+  level?: {isFastChargeCapable?: boolean};
+  currentType?: {title?: string};
+  statusType?: {title?: string};
+  connectionType?: {title?: string};
+  quantity?: number;
 };
 
 type Station = {
-  Connections?: Connection[];
-  AddressInfo?: {
-    Distance?: number;
-    DistanceUnit?: number;
+  connections?: Connection[];
+  addressInfo?: {
+    distance?: number;
+    distanceUnit?: number;
   };
 };
 
 export const getPlugScore = (station: Station): string => {
-  const connections = station.Connections || [];
+  const connections = station.connections || [];
   if (connections.length === 0) return '0.0';
 
   const totalScore = connections.reduce((score, conn) => {
     let connectionScore = 0;
 
-    if (conn.PowerKW) {
-      if (conn.PowerKW >= 100) connectionScore += 5;
-      else if (conn.PowerKW >= 50) connectionScore += 4;
-      else if (conn.PowerKW >= 22) connectionScore += 3;
-      else if (conn.PowerKW >= 7) connectionScore += 2;
+    if (conn.powerKW) {
+      if (conn.powerKW >= 100) connectionScore += 5;
+      else if (conn.powerKW >= 50) connectionScore += 4;
+      else if (conn.powerKW >= 22) connectionScore += 3;
+      else if (conn.powerKW >= 7) connectionScore += 2;
       else connectionScore += 1;
     }
 
-    if (conn.Level?.IsFastChargeCapable) connectionScore += 2;
-    if (conn.CurrentType?.Title?.includes('DC')) connectionScore += 1;
-    if (conn.StatusType?.Title === 'Operational') connectionScore += 1;
+    if (conn.level?.isFastChargeCapable) connectionScore += 2;
+    if (conn.currentType?.title?.includes('DC')) connectionScore += 1;
+    if (conn.statusType?.title === 'Operational') connectionScore += 1;
 
     return score + connectionScore;
   }, 0);
@@ -42,8 +42,8 @@ export const getPlugScore = (station: Station): string => {
 };
 
 export const calculateDistance = (station: Station): string => {
-  const isMiles = station.AddressInfo?.DistanceUnit === 1;
-  const rawDistance = station.AddressInfo?.Distance || 0;
+  const isMiles = station.addressInfo?.distanceUnit === 1;
+  const rawDistance = station.addressInfo?.distance || 0;
   const distanceInKm = isMiles ? rawDistance * 1.60934 : rawDistance;
 
   const distance =
@@ -55,17 +55,17 @@ export const calculateDistance = (station: Station): string => {
 };
 
 export const getTotalChargers = (connections: Connection[]): number =>
-  connections?.reduce((sum, conn) => sum + (conn.Quantity || 0), 0) || 0;
+  connections?.reduce((sum, conn) => sum + (conn.quantity || 0), 0) || 0;
 
 export const getPlugTypes = (connections: Connection[]): string =>
   [
     ...new Set(
-      connections.map(conn => conn.ConnectionType?.Title).filter(Boolean),
+      connections.map(conn => conn.connectionType?.title).filter(Boolean),
     ),
   ].join(', ');
 
 export const hasFastCharger = (connections: Connection[]): boolean =>
-  connections?.some(conn => conn.Level?.IsFastChargeCapable === true);
+  connections?.some(conn => conn.level?.isFastChargeCapable === true);
 
 export const shouldUpdateRegion = (prev: any, newRegion: any) => {
   const hasChanged =

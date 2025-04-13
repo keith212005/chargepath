@@ -20,9 +20,9 @@ export const AvailableStations = () => {
   const stationList = useAppSelector(state => state.stationList.data);
 
   const renderListItem = ({item}: any) => {
-    const totalChargers = getTotalChargers(item.Connections);
-    const plugTypes = getPlugTypes(item.Connections);
-    const isFastChargerAvailable = hasFastCharger(item.Connections);
+    const totalChargers = getTotalChargers(item.connections);
+    const plugTypes = getPlugTypes(item.connections);
+    const isFastChargerAvailable = hasFastCharger(item.connections);
     const distanceDisplay = calculateDistance(item);
     const plugScore = getPlugScore(item);
 
@@ -39,7 +39,7 @@ export const AvailableStations = () => {
           </View>
           <View style={styles.detailsContainer}>
             <Text style={globalStyles.textStyle('_15', 'text', 'U_BOLD')}>
-              {item.AddressInfo.Title}
+              {item.addressInfo.title}
             </Text>
             <View style={styles.infoRow}>
               <View style={styles.infoColumn}>
@@ -48,7 +48,7 @@ export const AvailableStations = () => {
                     globalStyles.textStyle('_15', 'text', 'U_BOLD'),
                     styles.chargerInfo,
                   ]}>
-                  {totalChargers} Charger{totalChargers > 1 ? 's' : ''}
+                  {totalChargers} Charger
                 </Text>
                 <Text style={globalStyles.textStyle('_12', 'text', 'U_REG')}>
                   Plug types: {plugTypes}

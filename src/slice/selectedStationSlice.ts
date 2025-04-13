@@ -1,10 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+interface SelectedStationState {
+  selectedStation: any;
+}
+
+const initialState: SelectedStationState = {
+  selectedStation: null,
+};
+
 const selectedStationSlice = createSlice({
   name: 'selectedStation',
-  initialState: {
-    selectedStation: null,
-  },
+  initialState,
   reducers: {
     setSelectedStation: (state, action) => {
       state.selectedStation = action.payload;

@@ -8,8 +8,18 @@ export const OPEN_CH_API_PARAMS = {
   distance: 20, // in km
   distanceunit: 'KM',
   compact: false,
-  verbose: true,
+  verbose: false,
   key: process.env.OPEN_CHARGE_MAP_API_KEY,
+  camelcase: true,
+};
+
+export const REGION_DELTA = (lat: any, long: any) => {
+  return {
+    latitude: lat,
+    longitude: long,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+  };
 };
 
 export const MAP_OPTIONS_LIST = [

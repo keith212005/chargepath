@@ -5,12 +5,16 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useAppTheme} from '@hooks';
 
 export type BottomSheetWrapperRef = {
   expand: () => void;
   close: () => void;
+  collapse: () => void;
+  forceClose: () => void;
+  snapToIndex?: (index: number) => void;
+  snapToPosition?: (position: number) => void;
 };
 
 export const BottomSheetWrapper = forwardRef<
@@ -29,6 +33,10 @@ export const BottomSheetWrapper = forwardRef<
   useImperativeHandle(ref, () => ({
     expand: () => bottomSheetRef.current?.expand(),
     close: () => bottomSheetRef.current?.close(),
+    snapToIndex: index => bottomSheetRef.current?.snapToIndex(index),
+    snapToPosition: index => bottomSheetRef.current?.snapToPosition(index),
+    collapse: () => bottomSheetRef.current?.collapse(),
+    forceClose: () => bottomSheetRef.current?.forceClose(),
   }));
 
   return (
