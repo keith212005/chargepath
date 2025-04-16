@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ScrollView,
 } from 'react-native';
 
 export const LoginScreen = () => {
@@ -30,7 +31,7 @@ export const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -50,14 +51,14 @@ export const LoginScreen = () => {
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     paddingHorizontal: 30,
     backgroundColor: '#fff',
   },

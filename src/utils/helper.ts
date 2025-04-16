@@ -41,6 +41,14 @@ export const getPlugScore = (station: Station): string => {
   return Math.min(10, averageScore).toFixed(1);
 };
 
+export const metersToKm = (meters: number): string => {
+  if (meters < 1000) {
+    return `${meters} m`; // Show in meters if less than 1 km
+  }
+  const kilometers = meters / 1000; // Convert to kilometers
+  return `${kilometers.toFixed(2)} km`; // Show in kilometers with 2 decimal places
+};
+
 export const calculateDistance = (station: Station): string => {
   const isMiles = station.addressInfo?.distanceUnit === 1;
   const rawDistance = station.addressInfo?.distance || 0;

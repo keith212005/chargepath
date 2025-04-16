@@ -36,7 +36,13 @@ export const AppContainer = () => {
         <Host>
           <Stack.Navigator
             initialRouteName="Home"
-            screenOptions={{headerShown: false, animation: 'fade'}}>
+            screenOptions={{
+              headerShown: false,
+              animation: 'fade',
+              headerLargeTitle: true,
+              headerLargeTitleShadowVisible: true,
+              headerBlurEffect: 'dark',
+            }}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Home" component={BottomTabNavigator} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />

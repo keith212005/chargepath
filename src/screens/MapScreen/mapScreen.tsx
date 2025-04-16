@@ -23,6 +23,7 @@ import {
   getInitialRegion,
   setSelectedStationAsync,
 } from '@slice';
+import {FAB} from '@rneui/themed';
 
 export const MapScreen = () => {
   const {colors} = useAppTheme();
@@ -49,7 +50,9 @@ export const MapScreen = () => {
   // Fetch initial region when location permission is granted
   useEffect(() => {
     if (status === 'GRANTED') {
-      dispatch(getInitialRegion());
+      dispatch(getInitialRegion()).then((region: any) => {
+        // mapRef.current?.animateToRegion(region, 1000);
+      });
     }
   }, [status, dispatch]);
 
@@ -111,6 +114,7 @@ export const MapScreen = () => {
             iconName="layer-group"
             iconType="font-awesome-5"
             iconColor={colors.text}
+            iconSize={24}
             backgroundColor={colors.card}
             onPress={() => mapInfoRef.current?.expand()}
             accessible
@@ -125,8 +129,11 @@ export const MapScreen = () => {
             iconName="my-location"
             iconType="material"
             iconColor={colors.text}
+            iconSize={24}
             backgroundColor={colors.card}
-            onPress={() => mapInfoRef.current?.expand()}
+            onPress={() => {
+              mapRef.current?.animateToRegion(region, 1000);
+            }}
             accessible
             accessibilityLabel="Open map layers"
           />

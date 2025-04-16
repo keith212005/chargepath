@@ -35,7 +35,12 @@ export const MapInformationBody = () => {
       <Text style={globalStyles.textStyle('_15', 'text', 'U_REG')}>
         {label}
       </Text>
-      <Switch color={colors.text} value={selected} onValueChange={onToggle} />
+      <Switch
+        color={colors.text}
+        trackColor={{false: colors.lightGray, true: colors.lightGray}}
+        value={selected}
+        onValueChange={onToggle}
+      />
     </View>
   );
 
@@ -81,6 +86,7 @@ export const MapInformationBody = () => {
           styles.buttonGroupContainer,
           {backgroundColor: colors.card},
         ]}
+        buttonContainerStyle={{}}
         selectedButtonStyle={{backgroundColor: colors.text}}
         selectedTextStyle={globalStyles.textStyle(
           '_15',

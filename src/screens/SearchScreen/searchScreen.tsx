@@ -1,99 +1,45 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import 'react-native-get-random-values';
-import {
-  GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef,
-} from 'react-native-google-places-autocomplete';
-import {Input, Icon, Divider} from '@rneui/themed';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useGlobalStyles} from '@utils';
-import {useAppTheme} from '@hooks';
-import {goBack} from '@navigators';
-
-const query = {
-  key: process.env.GOOGLE_MAPS_API_KEY,
-  language: 'en',
-  types: 'address',
-};
+import React, {useState} from 'react';
+import {View, StyleSheet, FlatList} from 'react-native';
+import {useDebounce, usePlacePredictions} from '@hooks';
+import {Loader, SearchBar, SearchBarRef, SearchListItem} from '@components';
 
 export const SearchScreen = () => {
-  const inputRef = React.useRef<GooglePlacesAutocompleteRef>(null);
-  const insets = useSafeAreaInsets();
-  const globalStyles = useGlobalStyles();
-  const {colors} = useAppTheme();
-
-  React.useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const SearchBar = () => {
-    return (
-      <View
-        style={[
-          globalStyles.layoutDirection('row', 'center', 'center'),
-          {
-            paddingTop: insets.top,
-            backgroundColor: colors.black,
-          },
-        ]}>
-        <GooglePlacesAutocomplete
-          ref={inputRef}
-          placeholder="Search"
-          minLength={2} // minimum length of text to search
-          predefinedPlaces={[]}
-          debounce={500}
-          query={query}
-          onPress={(data, details) => {}}
-          fetchDetails={true}
-          GooglePlacesSearchQuery={{
-            rankby: '',
-            types: 'restaurant',
-          }}
-          onNotFound={() => <Text>No Results</Text>}
-          onFail={error => console.error(error)}
-          keyboardShouldPersistTaps="always"
-          textInputProps={{
-            InputComp: Input,
-            leftIcon: {
-              type: 'ionicon',
-              name: 'search',
-              color: colors.white,
-            },
-            rightIcon: (
-              <TouchableOpacity
-                style={{paddingHorizontal: 5}}
-                onPress={() => goBack()}>
-                <Text
-                  style={globalStyles.textStyle('_14', colors.white, 'U_BOLD')}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
-            ),
-            inputContainerStyle: {
-              borderBottomWidth: 0, // This is to remove underline of the input
-            },
-          }}
-          styles={{
-            container: {},
-            textInputContainer: {
-              borderBottomWidth: 0.2,
-              borderColor: colors.icon,
-            },
-            textInput: {
-              borderWidth: 1, // This is the border of the input
-            },
-          }}
-        />
-      </View>
-    );
-  };
+  const searchBarRef = React.useRef<SearchBarRef>(null);
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 500);
+  const {predictions, loadingPrediction} = usePlacePredictions(debouncedQuery);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.background}}>
-      <SearchBar />
+    <View style={[styles.container]}>
+      {/* Search Bar */}
+      <SearchBar
+        ref={searchBarRef}
+        onChangeText={setQuery}
+        onPressClear={() => {
+          setQuery('');
+          searchBarRef.current?.clearInput();
+        }}
+      />
+
+      {/* Predictions List */}
+      <FlatList
+        data={predictions}
+        ListHeaderComponent={() => <Loader show={loadingPrediction} />}
+        keyExtractor={(item, index) => item.placeID || index.toString()}
+        renderItem={({item}) => (
+          <SearchListItem item={item} onPress={() => {}} />
+        )}
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  listItem: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+});

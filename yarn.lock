@@ -4024,12 +4024,13 @@ __metadata:
     jest: ^29.6.3
     prettier: 2.8.8
     react: 19.0.0
+    react-google-autocomplete: ^2.7.5
     react-native: 0.78.2
     react-native-config: ^1.5.5
     react-native-dotenv: ^3.4.11
     react-native-gesture-handler: ^2.25.0
     react-native-get-random-values: ^1.11.0
-    react-native-google-places-autocomplete: 2.5.1
+    react-native-google-places-sdk: ^0.3.1
     react-native-maps: ^1.20.1
     react-native-permissions: ^5.3.0
     react-native-portalize: ^1.0.7
@@ -8560,7 +8561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.5.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -8589,13 +8590,6 @@ __metadata:
   version: 6.1.0
   resolution: "pure-rand@npm:6.1.0"
   checksum: 8d53bc02bed99eca0b65b505090152ee7e9bd67dd74f8ff32ba1c883b87234067c5bf68d2614759fb217d82594d7a92919e6df80f97885e7b12b42af4bd3316a
-  languageName: node
-  linkType: hard
-
-"qs@npm:~6.9.1":
-  version: 6.9.7
-  resolution: "qs@npm:6.9.7"
-  checksum: 5bbd263332ccf320a1f36d04a2019a5834dc20bcb736431eaccde2a39dcba03fb26d2fd00174f5d7bc26aaad1cad86124b18440883ac042ea2a0fca6170c1bf1
   languageName: node
   linkType: hard
 
@@ -8660,6 +8654,18 @@ __metadata:
   peerDependencies:
     react: ">=17.0.0"
   checksum: 6b4d93209dff04a1f25d9f8e0c56a9a8a80e7889e8e8267299f34449c7e41a9ab90cad24569d03dd7173b56b7496576dba68f71f1d4e5c8be72f0633023668bc
+  languageName: node
+  linkType: hard
+
+"react-google-autocomplete@npm:^2.7.5":
+  version: 2.7.5
+  resolution: "react-google-autocomplete@npm:2.7.5"
+  dependencies:
+    lodash.debounce: ^4.0.8
+    prop-types: ^15.5.0
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 6881aba08ee58fbdcff6a248791ddfb23826256641cfc03d9ed75b2f0e1b509341edada88737417ec5077a2bca355962b676c737f956d41c3105fc6a091fe676
   languageName: node
   linkType: hard
 
@@ -8739,16 +8745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-google-places-autocomplete@npm:2.5.1":
-  version: 2.5.1
-  resolution: "react-native-google-places-autocomplete@npm:2.5.1"
-  dependencies:
-    lodash.debounce: ^4.0.8
-    prop-types: ^15.7.2
-    qs: ~6.9.1
+"react-native-google-places-sdk@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "react-native-google-places-sdk@npm:0.3.1"
   peerDependencies:
-    react-native: ">= 0.59"
-  checksum: cf9d69ba101530a8d764541dd327954a7f47db48251fec1d7d20318a0553a96f6e484a6cb1d81a0517e2af9fcc50ce6a6f9a449800b53129e0057b8c903fac97
+    react: "*"
+    react-native: "*"
+  checksum: 3e7474d32836fdade0ec0e22850852d96a9ac8a5dce8d85f3a2b1ecc3e0a33d3c7530cfe456413c0a9e7474fc3d4889c314f5a2a08926be35308809e90516345
   languageName: node
   linkType: hard
 

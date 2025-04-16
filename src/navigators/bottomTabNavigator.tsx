@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Platform, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BookmarksScreen, MapScreen, MeScreen, TripsScreen} from '@screens';
 import {Icon} from '@rneui/themed';
@@ -54,7 +54,7 @@ export const BottomTabNavigator = () => {
               />
             );
           },
-          tabBarStyle: {height: 86},
+          tabBarStyle: {height: Platform.OS === 'ios' ? 90 : 60},
           tabBarLabel: ({focused}) => {
             let textColor = focused ? colors.text : colors.icon;
             return (

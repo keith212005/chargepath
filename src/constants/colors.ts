@@ -29,6 +29,8 @@ const _commonColors = {
   black: '#121212',
   white: '#FFFFFF',
   gray: 'rgb(113, 113, 116)',
+  lightGray: 'rgb(200, 200, 200)',
+  darkCard: '#1C1C1E',
 };
 
 export const MyDarkTheme = {
