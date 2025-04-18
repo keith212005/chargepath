@@ -24,6 +24,8 @@ import {
   setSelectedStationAsync,
 } from '@slice';
 import {FAB} from '@rneui/themed';
+import {BottomSheetView} from '@gorhom/bottom-sheet';
+import {verticalScale} from 'react-native-size-matters';
 
 export const MapScreen = () => {
   const {colors} = useAppTheme();
@@ -104,7 +106,7 @@ export const MapScreen = () => {
       />
 
       {/* This View is used for map animation do not remove */}
-      <Animated.View style={[styles.mapContainer, animatedMapStyle]}>
+      <Animated.View style={animatedMapStyle}>
         {/* {!selectedStation && <FloatingButtons />} */}
       </Animated.View>
 
@@ -140,18 +142,17 @@ export const MapScreen = () => {
         )}
       </Animated.View>
 
-      {/* Map Information BottomSheet */}
+      {/* Map Information Modal */}
       <Portal>
-        <BottomSheetWrapper
-          ref={mapInfoRef}
-          snapPoints={[1, '95%']}
-          backgroundStyle={styles.sheetBorderRadius}>
-          <MapInfomationHeader ref={mapInfoRef} />
-          <MapInformationBody />
+        <BottomSheetWrapper ref={mapInfoRef} snapPoints={[1, '95%']}>
+          <BottomSheetView style={{flex: 1}}>
+            <MapInfomationHeader ref={mapInfoRef} />
+            <MapInformationBody />
+          </BottomSheetView>
         </BottomSheetWrapper>
       </Portal>
 
-      {/* Selected Station BottomSheet */}
+      {/* Selected Station Card Modal*/}
       <BottomSheetWrapper
         ref={selectedStationRef}
         index={-1} // Start in a closed state
@@ -162,19 +163,22 @@ export const MapScreen = () => {
         detached={true}
         containerStyle={{marginHorizontal: 20}}
         backgroundStyle={{borderRadius: 10, marginBottom: 60}}>
-        <SelectedStationCard onCardClose={clearStationCard} />
+        <BottomSheetView style={{flex: 1}}>
+          <SelectedStationCard onCardClose={clearStationCard} />
+        </BottomSheetView>
       </BottomSheetWrapper>
 
-      {/* Options BottomSheet */}
+      {/* Options Search Filter, etc Modal */}
       <BottomSheetWrapper
         ref={optionsRef}
         enableDynamicSizing={false}
         index={selectedStation ? 0 : 1}
         snapPoints={[40, 130, '50%', '90%']}
-        backgroundStyle={styles.sheetBorderRadius}
         onAnimate={handleAnimate}>
-        <MapOptionsList />
-        <AvailableStations />
+        <View style={{flex: 1, paddingTop: verticalScale(10)}}>
+          <MapOptionsList />
+          <AvailableStations />
+        </View>
       </BottomSheetWrapper>
     </View>
   );
@@ -184,21 +188,6 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-  },
-  mapContainer: {},
-  floatingButtonWrapper: {
-    position: 'absolute',
-    bottom: 2,
-    right: 0,
-    left: 0,
-  },
-  floatingButtonContainer: {
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    // padding: 20,
-  },
-  sheetBorderRadius: {
-    borderRadius: 0,
   },
   stachIconStyle: {
     borderRadius: 80,

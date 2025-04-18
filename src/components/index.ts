@@ -6,3 +6,7 @@ export * from './SelectedStationCard';
 export * from './SearchBar';
 export * from './SearchListItem';
 export * from './Loader';
+export * from './Modals';
+export * from './PlugScoreSlider';
+export * from './KilowattSlider';
+export * from './VehicleAndPlugs';

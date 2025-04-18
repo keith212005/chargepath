@@ -11,11 +11,13 @@
     "test": "jest",
     "pod": "cd ios && npx pod install && cd ..",
     "gradle": "cd android && ./gradlew clean && cd ..",
-    "link-assets": "npx react-native-asset"
+    "link-assets": "npx react-native-asset",
+    "release": "yarn android --mode release"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5",
     "@preact-signals/safe-react": "^0.9.0",
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-community/geolocation": "^3.4.0",
     "@react-native-community/netinfo": "^11.4.1",

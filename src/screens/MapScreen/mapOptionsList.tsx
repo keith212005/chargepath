@@ -3,50 +3,87 @@ import {MAP_OPTIONS_LIST} from '@constants';
 import {useAppTheme} from '@hooks';
 import {IconType} from '@rneui/base';
 import {FAB} from '@rneui/themed';
-import {responsiveHeight, responsiveWidth, useGlobalStyles} from '@utils';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {useGlobalStyles} from '@utils';
+import {View, Text, StyleSheet} from 'react-native';
 import {navigate} from '@navigators';
+import {FlatList} from 'react-native-gesture-handler';
+import {ms, mvs} from 'react-native-size-matters';
+import {MapFilterRef, MapFilters} from '@components';
 
 export const MapOptionsList = () => {
   const globalStyles = useGlobalStyles();
   const {colors} = useAppTheme();
+  const mapFilterRef = React.useRef<MapFilterRef>(null);
 
   const renderButton = ({
+    id,
     label,
     iconType,
     iconName,
     iconColor,
   }: {
+    id: number;
     label: string;
     iconType: IconType;
     iconName: string;
     iconColor: string;
-  }) => (
-    <View
-      style={[
-        globalStyles.layoutDirection('column', 'center', 'center'),
-        styles.buttonContainer,
-        {backgroundColor: colors.background, borderBottomColor: colors.gray},
-      ]}>
-      <FAB
-        icon={{name: iconName, type: iconType, color: iconColor}}
-        color={colors.card}
-        onPress={() => navigate('SearchScreen', undefined)}
-        style={[styles.shadowContainer, {backgroundColor: colors.background}]}
-        containerStyle={{borderWidth: 0.5, borderColor: colors.gray}}
-      />
-      <Text
+  }) => {
+    const handleButtonPress = () => {
+      switch (id) {
+        case 1:
+          navigate('SearchScreen', undefined);
+          break;
+        case 2:
+          console.log('clicked....');
+          mapFilterRef.current?.expand();
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+        case 8:
+          break;
+        case 9:
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    return (
+      <View
         style={[
-          globalStyles.textStyles('labelSmall', 'text'),
-          styles.buttonLabel,
+          globalStyles.layoutDirection('column', 'center', 'center'),
+          styles.buttonContainer,
+          {borderBottomColor: colors.gray},
         ]}>
-        {label}
-      </Text>
-    </View>
-  );
+        <FAB
+          icon={{name: iconName, type: iconType, color: iconColor}}
+          color={colors.card}
+          onPress={handleButtonPress}
+          style={[styles.shadowContainer, {backgroundColor: colors.background}]}
+          containerStyle={{borderWidth: 0.5, borderColor: colors.gray}}
+        />
+        <Text
+          style={[
+            globalStyles.textStyles('labelSmall', 'text'),
+            styles.buttonLabel,
+          ]}>
+          {label}
+        </Text>
+      </View>
+    );
+  };
 
   return (
-    <View>
+    <>
       <FlatList
         data={MAP_OPTIONS_LIST}
         horizontal
@@ -54,6 +91,7 @@ export const MapOptionsList = () => {
         keyExtractor={(item, index) => `${item.label}-${index}`}
         renderItem={({item}) =>
           renderButton({
+            id: item.id,
             label: item.label,
             iconType: item.iconType,
             iconName: item.iconName,
@@ -61,15 +99,17 @@ export const MapOptionsList = () => {
           })
         }
       />
-    </View>
+      {/* All filters button will open MapFilterModal */}
+
+      <MapFilters ref={mapFilterRef} />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    paddingHorizontal: responsiveWidth(2),
-    paddingVertical: responsiveHeight(1.7),
-    borderBottomWidth: 0.2,
+    paddingHorizontal: mvs(6, 3),
+    paddingVertical: ms(9, 3),
   },
   buttonLabel: {
     marginTop: 5,

@@ -4,8 +4,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
-import {StyleSheet} from 'react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
 import {useAppTheme} from '@hooks';
 
 export type BottomSheetWrapperRef = {
@@ -47,22 +46,10 @@ export const BottomSheetWrapper = forwardRef<
         width: 50,
         height: 8,
       }}
-      detached={true}
-      handleStyle={{
-        backgroundColor: colors.card,
-      }}
+      handleStyle={{backgroundColor: colors.card}}
       onChange={handleSheetChanges}
       {...props}>
-      <BottomSheetView style={[styles.contentContainer]}>
-        {children}
-      </BottomSheetView>
+      {children}
     </BottomSheet>
   );
-});
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    // backgroundColor: 'pink',
-  },
 });

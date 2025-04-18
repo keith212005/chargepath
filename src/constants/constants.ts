@@ -118,6 +118,41 @@ export const LEGENDS = [
   },
 ];
 
+export const PLUG_TYPES = [
+  {
+    id: 1,
+    label: 'CCS1',
+  },
+  {
+    id: 2,
+    label: 'CHAdeMO',
+  },
+  {
+    id: 3,
+    label: 'J-1772',
+  },
+  {
+    id: 4,
+    label: 'NACS (Tesla)',
+  },
+  {
+    id: 5,
+    label: 'NEMA 14-50',
+  },
+  {
+    id: 6,
+    label: 'NEMA TT-30',
+  },
+  {
+    id: 7,
+    label: 'Tesla (Roadster)',
+  },
+  {
+    id: 8,
+    label: 'Wall',
+  },
+];
+
 // latitudeDelta: 0.015,
 // longitudeDelta: 0.041,
 

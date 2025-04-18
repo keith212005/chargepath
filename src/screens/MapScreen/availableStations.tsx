@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Divider} from '@rneui/themed';
 import {useAppTheme} from '@hooks';
 import {useAppSelector} from '@store';
@@ -13,6 +12,7 @@ import {
   useGlobalStyles,
 } from '@utils';
 import {GreenChargerMarker, OrangeChargerMarker} from '@assets';
+import {BottomSheetFlashList, BottomSheetFlatList} from '@gorhom/bottom-sheet';
 
 export const AvailableStations = () => {
   const {colors} = useAppTheme();
@@ -75,22 +75,17 @@ export const AvailableStations = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <BottomSheetFlatList
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={true}
-        data={stationList as any}
-        renderItem={renderListItem}
-      />
-    </View>
+    <BottomSheetFlatList
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+      scrollEnabled={true}
+      data={stationList as any}
+      renderItem={renderListItem}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   listItemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
