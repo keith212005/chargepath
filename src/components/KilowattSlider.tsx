@@ -5,6 +5,7 @@ import {useAppTheme} from '@hooks';
 import {useGlobalStyles} from '@utils';
 import {vs, s, scale, ms} from 'react-native-size-matters';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import {color} from '@rneui/base';
 
 export const KilowattSlider = () => {
   const [value, setValue] = useState(0);
@@ -32,8 +33,8 @@ export const KilowattSlider = () => {
           min={0}
           max={350}
           step={1}
-          selectedStyle={{backgroundColor: '#0057D9'}}
-          unselectedStyle={{backgroundColor: '#ddd'}}
+          selectedStyle={{backgroundColor: colors.text}}
+          unselectedStyle={{backgroundColor: 'rgba(200, 200, 200, 0.47)'}}
           customMarker={e => (
             <View
               style={[
@@ -46,44 +47,43 @@ export const KilowattSlider = () => {
           )}
         />
       </View>
-      <View style={styles.rangeTextContainer}>
+      <View
+        style={[styles.rangeTextContainer, {alignItems: 'center', height: 20}]}>
         <Text
           style={[
             styles.rangeText,
-            // {flex: 2},
             globalStyles.textStyles('labelSmall', colors.text),
           ]}>
           0
         </Text>
 
-        <View
-          style={[
-            globalStyles.layoutDirection('row', 'center', 'center'),
-            {flex: 8},
-          ]}>
-          {range[0] > 22 && (
-            <>
-              <Icon
-                name="lightning-bolt-circle"
-                type="material-community"
-                size={20}
-                color={colors.gray}
-              />
-              <Text
-                style={[
-                  styles.rangeText,
-                  globalStyles.textStyles('labelSmall', colors.text),
-                ]}>
-                Fast charging enabled
-              </Text>
-            </>
-          )}
-        </View>
+        {range[0] > 22 && (
+          <View
+            style={[
+              globalStyles.layoutDirection('row', 'center', 'center'),
+              {flex: 8},
+            ]}>
+            <Icon
+              name="lightning-bolt-circle"
+              type="material-community"
+              size={18}
+              color={colors.icon}
+            />
+            <Text
+              style={[
+                styles.rangeText,
+                {marginLeft: 5},
+                globalStyles.textStyles('labelSmall', colors.icon),
+              ]}>
+              Fast charging enabled
+            </Text>
+          </View>
+        )}
 
         <Text
           style={[
             styles.rangeText,
-            {textAlign: 'right'},
+            {right: -10},
             globalStyles.textStyles('labelSmall', colors.text),
           ]}>
           350+

@@ -55,14 +55,9 @@ export const VehicleAndPlugs = () => {
     }
     return (
       <View style={[styles.itemContainer, {backgroundColor: colors.card}]}>
-        <View style={styles.iconContainer}>
-          {renderIcon(item.id, colors.text)}
-        </View>
-        <Text
-          style={[
-            globalStyles.textStyles('paragraphXSmall', colors.text),
-            styles.itemLabel,
-          ]}>
+        {renderIcon(item.id, colors.text)}
+
+        <Text style={[globalStyles.textStyles('paragraphXSmall', colors.text)]}>
           {item.label}
         </Text>
       </View>
@@ -131,22 +126,18 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   flatListContainer: {
-    borderWidth: 0.2,
+    borderWidth: 0.5,
     borderRadius: 5,
+    overflow: 'hidden',
   },
   itemContainer: {
     flex: 1,
-    borderWidth: 0.2,
+    borderWidth: 0.5,
     borderColor: 'lightgray',
     paddingVertical: 10,
     alignItems: 'center',
-  },
-  iconContainer: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  itemLabel: {
-    textAlign: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
   emptyItem: {
     flex: 1,

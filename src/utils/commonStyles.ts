@@ -1,6 +1,6 @@
 import React from 'react';
 import {FONTS, FONT_SIZE} from '@constants';
-import {moderateScale} from 'react-native-size-matters';
+import {ms} from 'react-native-size-matters';
 import {useAppTheme} from '@hooks';
 
 const getGlobalStyles = (props: {colors: any}) => ({
@@ -11,7 +11,7 @@ const getGlobalStyles = (props: {colors: any}) => ({
   ) => {
     const resolvedColor = props.colors[color] ?? color;
     return {
-      fontSize: moderateScale(FONT_SIZE[fontSize]),
+      fontSize: ms(FONT_SIZE[fontSize]),
       color: resolvedColor,
       fontFamily: FONTS[fontFamily],
       letterSpacing: 0.7,
@@ -74,111 +74,111 @@ const getGlobalStyles = (props: {colors: any}) => ({
     const resolvedColor = props.colors[color] ?? color;
     const styles = {
       displayLarge: {
-        fontSize: moderateScale(96),
-        lineHeight: moderateScale(112),
+        fontSize: ms(96),
+        lineHeight: ms(112),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
         color: resolvedColor,
       },
       displayMedium: {
-        fontSize: moderateScale(52),
-        lineHeight: moderateScale(64),
+        fontSize: ms(52),
+        lineHeight: ms(64),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       displaySmall: {
-        fontSize: moderateScale(44),
-        lineHeight: moderateScale(52),
+        fontSize: ms(44),
+        lineHeight: ms(52),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       displayXSmall: {
-        fontSize: moderateScale(36),
-        lineHeight: moderateScale(44),
+        fontSize: ms(36),
+        lineHeight: ms(44),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       headingXXLarge: {
-        fontSize: moderateScale(40),
-        lineHeight: moderateScale(52),
+        fontSize: ms(40),
+        lineHeight: ms(52),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       headingXLarge: {
-        fontSize: moderateScale(36),
-        lineHeight: moderateScale(44),
+        fontSize: ms(36),
+        lineHeight: ms(44),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       headingLarge: {
-        fontSize: moderateScale(32),
-        lineHeight: moderateScale(40),
+        fontSize: ms(32),
+        lineHeight: ms(40),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       headingMedium: {
-        fontSize: moderateScale(28),
-        lineHeight: moderateScale(36),
+        fontSize: ms(28),
+        lineHeight: ms(36),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       headingSmall: {
-        fontSize: moderateScale(24),
-        lineHeight: moderateScale(32),
+        fontSize: ms(24),
+        lineHeight: ms(32),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0,
       },
       headingXSmall: {
-        fontSize: moderateScale(20),
-        lineHeight: moderateScale(28),
+        fontSize: ms(20),
+        lineHeight: ms(28),
         fontFamily: FONTS.U_BOLD,
         letterSpacing: 0.3,
       },
       labelLarge: {
-        fontSize: moderateScale(18),
-        lineHeight: moderateScale(24),
+        fontSize: ms(18),
+        lineHeight: ms(24),
         fontFamily: FONTS.U_MED,
         letterSpacing: 0,
       },
       labelMedium: {
-        fontSize: moderateScale(16),
-        lineHeight: moderateScale(20),
+        fontSize: ms(16),
+        lineHeight: ms(20),
         fontFamily: FONTS.U_MED,
         letterSpacing: 0,
       },
       labelSmall: {
-        fontSize: moderateScale(12),
-        lineHeight: moderateScale(16),
+        fontSize: ms(12),
+        lineHeight: ms(16),
         fontFamily: FONTS.U_MED,
         letterSpacing: 0.3,
       },
       labelXSmall: {
-        fontSize: moderateScale(10),
-        lineHeight: moderateScale(16),
+        fontSize: ms(10),
+        lineHeight: ms(16),
         fontFamily: FONTS.U_MED,
         letterSpacing: 0.5,
       },
       paragraphLarge: {
-        fontSize: moderateScale(18),
-        lineHeight: moderateScale(28),
+        fontSize: ms(18),
+        lineHeight: ms(28),
         fontFamily: FONTS.U_REG,
         letterSpacing: 0,
       },
       paragraphMedium: {
-        fontSize: moderateScale(16),
-        lineHeight: moderateScale(24),
+        fontSize: ms(16),
+        lineHeight: ms(24),
         fontFamily: FONTS.U_REG,
         letterSpacing: 0,
       },
       paragraphSmall: {
-        fontSize: moderateScale(14),
-        lineHeight: moderateScale(20),
+        fontSize: ms(14),
+        lineHeight: ms(20),
         fontFamily: FONTS.U_REG,
         letterSpacing: 0,
       },
       paragraphXSmall: {
-        fontSize: moderateScale(12),
-        lineHeight: moderateScale(20),
+        fontSize: ms(12),
+        lineHeight: ms(20),
         fontFamily: FONTS.U_REG,
         letterSpacing: 0,
       },

@@ -12,6 +12,7 @@ import {useGlobalStyles} from '@utils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useAppTheme} from '@hooks';
 import {useNavigation} from '@react-navigation/native';
+import {ms} from 'react-native-size-matters';
 
 // Define the type for the ref
 export interface SearchBarRef {
@@ -45,7 +46,10 @@ export const SearchBar = forwardRef<SearchBarRef, SearchBarProps>(
     return (
       <View
         style={[
-          {paddingTop: insets.top, backgroundColor: colors.darkCard},
+          {
+            backgroundColor: colors.darkCard,
+            paddingTop: Platform.OS === 'ios' ? insets.top : 10,
+          },
           styles.container,
           globalStyles.layoutDirection('row', 'flex-start', 'center'),
         ]}>
@@ -85,23 +89,22 @@ export const SearchBar = forwardRef<SearchBarRef, SearchBarProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: ms(10),
     borderBottomWidth: 0.2,
     borderColor: 'gray',
-    paddingVertical: 20,
+    paddingVertical: ms(10),
   },
   input: {
     flex: 1,
     backgroundColor: 'white',
     borderRadius: 8,
-    paddingHorizontal: 10,
+    paddingHorizontal: ms(10),
     paddingVertical: Platform.OS === 'ios' ? 18 : 12,
-    paddingRight: 40,
-    marginHorizontal: 10,
-    marginVertical: 10,
+    marginHorizontal: ms(5),
+    marginVertical: ms(10),
   },
   clearButton: {
     position: 'absolute',
-    right: 20,
+    right: ms(12),
   },
 });

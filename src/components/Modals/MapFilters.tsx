@@ -7,10 +7,12 @@ import {
   StyleSheet,
 } from 'react-native';
 import {
+  Amenities,
   BottomSheetWrapper,
   BottomSheetWrapperRef,
   KilowattSlider,
   PlugScoreSlider,
+  StationCount,
   VehicleAndPlugs,
 } from '@components';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
@@ -18,6 +20,7 @@ import {Portal} from 'react-native-portalize';
 import {useGlobalStyles} from '@utils';
 import {useAppTheme} from '@hooks';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {vs} from 'react-native-size-matters';
 
 export interface MapFilterRef {
   expand: () => void;
@@ -68,16 +71,20 @@ export const MapFilters = forwardRef<MapFilterRef, MapFiltersProps>(
         <BottomSheetWrapper
           ref={modalRef}
           index={-1}
-          maxDynamicContentSize={Dimensions.get('screen').height - insets.top}
+          maxDynamicContentSize={Dimensions.get('window').height - vs(50)}
           handleStyle={{}}
           handleComponent={renderHeader}
           enablePanDownToClose={true}>
           <BottomSheetScrollView
-            contentContainerStyle={{paddingBottom: insets.bottom * 3}}
+            contentContainerStyle={{
+              paddingBottom: 100,
+            }}
             style={[styles.contentContainer, {backgroundColor: colors.card}]}>
             <PlugScoreSlider />
             <KilowattSlider />
             <VehicleAndPlugs />
+            <StationCount />
+            <Amenities />
           </BottomSheetScrollView>
         </BottomSheetWrapper>
       </Portal>

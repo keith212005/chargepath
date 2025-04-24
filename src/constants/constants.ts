@@ -153,6 +153,99 @@ export const PLUG_TYPES = [
   },
 ];
 
+export const STATION_COUNT = ['Any', '2+', '4+', '6+'];
+
+export const AMENITIES_LIST = [
+  {
+    id: 1,
+    label: 'Dining',
+    iconType: 'material-community',
+    iconName: 'silverware-fork-knife',
+    iconSize: 22,
+    isSelected: true,
+  },
+  {
+    id: 2,
+    label: 'Restroom',
+    iconType: 'font-awesome-5',
+    iconName: 'restroom',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 3,
+    label: 'Shopping',
+    iconType: 'font-awesome-5',
+    iconName: 'shopping-bag',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 4,
+    label: 'Lodging',
+    iconType: 'ionicon',
+    iconName: 'bed',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 5,
+    label: 'Park',
+    iconType: 'material-icon',
+    iconName: 'park',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 6,
+    label: 'Grocery',
+    iconType: 'feather',
+    iconName: 'shopping-cart',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 7,
+    label: 'WiFi',
+    iconType: 'feather',
+    iconName: 'wifi',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 8,
+    label: 'Valet',
+    iconType: 'material-community',
+    iconName: 'car-clock',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 9,
+    label: 'Hiking',
+    iconType: 'font-awesome-5',
+    iconName: 'hiking',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 10,
+    label: 'Camping',
+    iconType: 'font-awesome-5',
+    iconName: 'campground',
+    iconSize: 22,
+    isSelected: false,
+  },
+  {
+    id: 11,
+    label: 'Free Charge',
+    iconType: 'font-awesome',
+    iconName: 'dollar',
+    iconSize: 22,
+    isSelected: false,
+  },
+];
+
 // latitudeDelta: 0.015,
 // longitudeDelta: 0.041,
 

@@ -3,7 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Slider} from '@rneui/themed';
 import {useAppTheme} from '@hooks';
 import {useGlobalStyles} from '@utils';
-import {vs, s} from 'react-native-size-matters';
+import {vs, s, ms} from 'react-native-size-matters';
 
 export const PlugScoreSlider = () => {
   const [value, setValue] = useState(0);
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   scoreValue: {
-    height: vs(20),
-    width: s(24),
+    height: 30,
+    width: 30,
     borderRadius: 5,
     marginLeft: 10,
     overflow: 'hidden',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     alignSelf: 'center',
-    width: '50%',
+    width: '70%',
   },
   descriptionText: {
     textAlign: 'center',

@@ -23,9 +23,11 @@ import {
   getInitialRegion,
   setSelectedStationAsync,
 } from '@slice';
-import {FAB} from '@rneui/themed';
+import {useBackHandler} from '@react-native-community/hooks';
 import {BottomSheetView} from '@gorhom/bottom-sheet';
-import {verticalScale} from 'react-native-size-matters';
+import {verticalScale, vs} from 'react-native-size-matters';
+import {Divider} from '@rneui/themed';
+import {useOfflineSync} from '@keithj/react-native-offline-sync';
 
 export const MapScreen = () => {
   const {colors} = useAppTheme();
@@ -42,12 +44,11 @@ export const MapScreen = () => {
   const {status} = useAppSelector(state => state.locationPermission);
   const {animatedMapStyle, handleAnimate} = useBottomSheetAnimation();
   const {selectedStation} = useAppSelector(state => state.selectedStation);
+  const {isOnline, enqueueRequest, queueLength} = useOfflineSync();
 
   // Flags for Map and Marker Presses
   const mapPressedRef = useRef(false);
   const markerPressedRef = useRef(false);
-
-  console.log(region);
 
   // Fetch initial region when location permission is granted
   useEffect(() => {
@@ -56,6 +57,21 @@ export const MapScreen = () => {
         // mapRef.current?.animateToRegion(region, 1000);
       });
     }
+
+    enqueueRequest({
+      request: {
+        url: 'https://jsonplaceholder.typicode.com/posts',
+        method: 'POST',
+        data: {
+          title: 'Offline Test',
+          body: 'This request will be queued if offline.',
+        },
+      },
+      options: {
+        maxRetries: 5,
+        preventDuplicate: true, // Optional: avoid enqueueing the same request again
+      },
+    });
   }, [status, dispatch]);
 
   // Handle map press to clear selected station
@@ -177,6 +193,7 @@ export const MapScreen = () => {
         onAnimate={handleAnimate}>
         <View style={{flex: 1, paddingTop: verticalScale(10)}}>
           <MapOptionsList />
+          <Divider style={{marginVertical: vs(10)}} />
           <AvailableStations />
         </View>
       </BottomSheetWrapper>
