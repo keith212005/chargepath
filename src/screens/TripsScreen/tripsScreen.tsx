@@ -1,15 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {useGlobalStyles} from '@utils';
 import {useAppTheme} from '@hooks';
-import {counter, resetCounter, usePersistedCounter} from '@signals';
 import {Button} from '@rneui/themed';
 
 export const TripsScreen = () => {
   const globalStyle = useGlobalStyles();
   const {colors} = useAppTheme();
-
-  usePersistedCounter(); // always put this hook at the end of other hooks to avoid side effects of other hooks like useEffect
+  const [counter, setCounter] = useState(0);
 
   return (
     <View
@@ -23,7 +21,7 @@ export const TripsScreen = () => {
       <Button
         title="Increment"
         onPress={() => {
-          counter.value++;
+          setCounter(counter + 1);
         }}
       />
       <Button

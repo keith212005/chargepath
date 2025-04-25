@@ -1,23 +1,19 @@
 import Geolocation from '@react-native-community/geolocation';
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-const initialRegion = {
-  latitude: 40.7128,
-  longitude: -74.006,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
+type TinitialRegion = {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
 };
 
+const initialRegion = null as TinitialRegion | null;
 // Async thunk to get the initial region
 export const getInitialRegion = createAsyncThunk(
   'currentRegion/getInitialRegion',
   async (_, {rejectWithValue}) => {
-    return new Promise<{
-      latitude: number;
-      longitude: number;
-      latitudeDelta: number;
-      longitudeDelta: number;
-    }>((resolve, reject) => {
+    return new Promise<TinitialRegion>((resolve, reject) => {
       console.log('Geolocation called...');
 
       Geolocation.getCurrentPosition(
@@ -32,7 +28,7 @@ export const getInitialRegion = createAsyncThunk(
         },
         error => {
           console.warn('Error getting location', error);
-          resolve(initialRegion); // Fallback to initialRegion
+          reject(new Error('Failed to get location')); // Reject with an error
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
@@ -44,7 +40,7 @@ export const currentRegionSlice = createSlice({
   name: 'currentRegion',
   initialState: initialRegion,
   reducers: {
-    setCurrentRegion: (state, action: PayloadAction<typeof initialRegion>) => {
+    setCurrentRegion: (state, action) => {
       return {...state, ...action.payload}; // Update state immutably
     },
   },

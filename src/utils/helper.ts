@@ -81,5 +81,7 @@ export const shouldUpdateRegion = (prev: any, newRegion: any) => {
     Math.abs(prev.latitude - newRegion.latitude) > 0.0001 ||
     Math.abs(prev.longitude - newRegion.longitude) > 0.0001;
 
+  console.log('hasChanged>>>>>>>>>', hasChanged);
+
   return hasChanged;
 };

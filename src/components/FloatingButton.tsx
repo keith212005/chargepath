@@ -13,6 +13,8 @@ interface FloatingButtonProps extends FABProps {
 export const FloatingButton = (props: FloatingButtonProps) => {
   const {iconName, iconType, iconColor, iconSize, backgroundColor} = props;
 
+  console.log('FloatingButton props:', props);
+
   return (
     <View style={[styles.shadowContainer, {backgroundColor}]}>
       <FAB

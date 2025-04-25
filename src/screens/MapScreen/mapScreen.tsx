@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useRef} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import MapView from 'react-native-maps';
 import {Portal} from 'react-native-portalize';
 import Animated from 'react-native-reanimated';
 
@@ -10,6 +9,7 @@ import {
   BottomSheetWrapperRef,
   CustomMapView,
   SelectedStationCard,
+  CustomMapViewProps,
 } from '@components';
 import {MapInfomationHeader} from './mapInformationHeader';
 import {MapInformationBody} from './mapInformationBody';
@@ -18,16 +18,10 @@ import {AvailableStations} from './availableStations';
 
 import {useAppTheme, useBottomSheetAnimation} from '@hooks';
 import {useAppDispatch, useAppSelector} from '@store';
-import {
-  clearSelectedStationAsync,
-  getInitialRegion,
-  setSelectedStationAsync,
-} from '@slice';
-import {useBackHandler} from '@react-native-community/hooks';
+import {clearSelectedStationAsync} from '@slice';
 import {BottomSheetView} from '@gorhom/bottom-sheet';
 import {verticalScale, vs} from 'react-native-size-matters';
 import {Divider} from '@rneui/themed';
-import {useOfflineSync} from '@keithj/react-native-offline-sync';
 
 export const MapScreen = () => {
   const {colors} = useAppTheme();
@@ -37,66 +31,23 @@ export const MapScreen = () => {
   const mapInfoRef = useRef<BottomSheetWrapperRef | null>(null);
   const optionsRef = useRef<BottomSheetWrapperRef | null>(null);
   const selectedStationRef = useRef<BottomSheetWrapperRef>(null);
-  const mapRef = useRef<MapView>(null);
 
   // State and Redux Selectors
   const region = useAppSelector(state => state.region);
   const {status} = useAppSelector(state => state.locationPermission);
   const {animatedMapStyle, handleAnimate} = useBottomSheetAnimation();
   const {selectedStation} = useAppSelector(state => state.selectedStation);
-  const {isOnline, enqueueRequest, queueLength} = useOfflineSync();
 
   // Flags for Map and Marker Presses
-  const mapPressedRef = useRef(false);
+  // const mapPressedRef = useRef(false);
   const markerPressedRef = useRef(false);
 
   // Fetch initial region when location permission is granted
   useEffect(() => {
     if (status === 'GRANTED') {
-      dispatch(getInitialRegion()).then((region: any) => {
-        // mapRef.current?.animateToRegion(region, 1000);
-      });
+      // dispatch(getInitialRegion()).then((region: any) => {});
     }
-
-    enqueueRequest({
-      request: {
-        url: 'https://jsonplaceholder.typicode.com/posts',
-        method: 'POST',
-        data: {
-          title: 'Offline Test',
-          body: 'This request will be queued if offline.',
-        },
-      },
-      options: {
-        maxRetries: 5,
-        preventDuplicate: true, // Optional: avoid enqueueing the same request again
-      },
-    });
   }, [status, dispatch]);
-
-  // Handle map press to clear selected station
-  const onMapPress = useCallback(() => {
-    if (!markerPressedRef.current && selectedStation) {
-      dispatch(clearSelectedStationAsync()).then(() => {
-        selectedStationRef.current?.close();
-      });
-    }
-    markerPressedRef.current = false;
-    mapPressedRef.current = false;
-  }, [dispatch, selectedStation]);
-
-  // Handle marker press to select a station
-  const handleMarkerPress = useCallback(
-    (station: any) => {
-      markerPressedRef.current = true;
-      setTimeout(() => {
-        dispatch(setSelectedStationAsync(station)).then(() => {
-          selectedStationRef.current?.expand();
-        });
-      }, 100);
-    },
-    [dispatch],
-  );
 
   // Clear selected station and close the bottom sheet
   const clearStationCard = useCallback(() => {
@@ -107,18 +58,12 @@ export const MapScreen = () => {
     }, 200);
   }, [dispatch]);
 
-  // Render loading state if region is not available
-  if (!region) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
     <View style={styles.container}>
       {/* Custom MapView */}
       <CustomMapView
-        ref={mapRef}
-        onPress={onMapPress}
-        onPressMarker={handleMarkerPress}
+        onMapPress={() => selectedStationRef.current?.close()}
+        onMarkerPress={() => selectedStationRef.current?.expand()}
       />
 
       {/* This View is used for map animation do not remove */}
@@ -149,9 +94,11 @@ export const MapScreen = () => {
             iconColor={colors.text}
             iconSize={24}
             backgroundColor={colors.card}
-            onPress={() => {
-              mapRef.current?.animateToRegion(region, 1000);
-            }}
+            // onPress={() => {
+            //   if (region) {
+            //     mapRef.current?.animateToRegion(region, 1000);
+            //   }
+            // }}
             accessible
             accessibilityLabel="Open map layers"
           />
@@ -172,7 +119,7 @@ export const MapScreen = () => {
       <BottomSheetWrapper
         ref={selectedStationRef}
         index={-1} // Start in a closed state
-        snapPoints={['37%']}
+        snapPoints={['27%']}
         enablePanDownToClose={true}
         handleStyle={{borderRadius: 20, backgroundColor: colors.card}}
         handleIndicatorStyle={{height: 0, width: 0}}

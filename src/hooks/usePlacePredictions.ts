@@ -9,7 +9,7 @@ import {useAppSelector} from '@store';
 GooglePlacesSDK.initialize(`${process.env.GOOGLE_MAPS_API_KEY}`);
 
 export const usePlacePredictions = (input: string) => {
-  console.log('usePlacePredictions called with input:', input);
+  // console.log('usePlacePredictions called with input:', input);
 
   const [predictions, setPredictions] = useState<PlacePrediction[]>([]);
   const [loadingPrediction, setLoadingPrediction] = useState(false);
@@ -19,7 +19,7 @@ export const usePlacePredictions = (input: string) => {
 
   // Memoize the filters object to prevent unnecessary re-renders
   const filters: PredictionFiltersParam = useMemo(() => {
-    console.log('Filters recalculated');
+    // console.log('Filters recalculated');
     return {
       types: ['geocode'],
       locationBias: {
@@ -31,7 +31,7 @@ export const usePlacePredictions = (input: string) => {
   }, [lat, lng]);
 
   useEffect(() => {
-    console.log('useEffect triggered with input:', input);
+    // console.log('useEffect triggered with input:', input);
 
     if (input && input.length < 2) {
       setPredictions([]);
@@ -43,7 +43,7 @@ export const usePlacePredictions = (input: string) => {
 
     GooglePlacesSDK.fetchPredictions(input, filters)
       .then(results => {
-        console.log('Predictions fetched:', results);
+        // console.log('Predictions fetched:', results);
 
         let combineResults = results;
         if (input) {
@@ -60,7 +60,7 @@ export const usePlacePredictions = (input: string) => {
       });
   }, [input]);
 
-  console.log('Predictions:>>>>>>>>>>', predictions);
+  // console.log('Predictions:>>>>>>>>>>', predictions);
 
   return {predictions, loadingPrediction};
 };

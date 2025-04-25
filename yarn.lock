@@ -49,7 +49,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.20.0, @babel/core@npm:^7.23.9, @babel/core@npm:^7.24.7, @babel/core@npm:^7.25.2":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.20.0, @babel/core@npm:^7.23.9, @babel/core@npm:^7.24.4, @babel/core@npm:^7.24.7, @babel/core@npm:^7.25.2":
   version: 7.26.10
   resolution: "@babel/core@npm:7.26.10"
   dependencies:
@@ -293,7 +293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.0, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.23.9, @babel/parser@npm:^7.24.7, @babel/parser@npm:^7.25.3, @babel/parser@npm:^7.26.10, @babel/parser@npm:^7.27.0":
+"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.0, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.23.9, @babel/parser@npm:^7.24.4, @babel/parser@npm:^7.24.7, @babel/parser@npm:^7.25.3, @babel/parser@npm:^7.26.10, @babel/parser@npm:^7.27.0":
   version: 7.27.0
   resolution: "@babel/parser@npm:7.27.0"
   dependencies:
@@ -1051,7 +1051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-private-methods@npm:^7.24.7, @babel/plugin-transform-private-methods@npm:^7.25.9":
+"@babel/plugin-transform-private-methods@npm:^7.24.4, @babel/plugin-transform-private-methods@npm:^7.24.7, @babel/plugin-transform-private-methods@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/plugin-transform-private-methods@npm:7.25.9"
   dependencies:
@@ -1524,7 +1524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.0.0, @babel/types@npm:^7.20.0, @babel/types@npm:^7.20.7, @babel/types@npm:^7.25.2, @babel/types@npm:^7.25.9, @babel/types@npm:^7.26.10, @babel/types@npm:^7.27.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4":
+"@babel/types@npm:^7.0.0, @babel/types@npm:^7.20.0, @babel/types@npm:^7.20.7, @babel/types@npm:^7.25.2, @babel/types@npm:^7.25.9, @babel/types@npm:^7.26.0, @babel/types@npm:^7.26.10, @babel/types@npm:^7.27.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4":
   version: 7.27.0
   resolution: "@babel/types@npm:7.27.0"
   dependencies:
@@ -3822,6 +3822,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-react-compiler@npm:rc":
+  version: 19.1.0-rc.1
+  resolution: "babel-plugin-react-compiler@npm:19.1.0-rc.1"
+  dependencies:
+    "@babel/types": ^7.26.0
+  checksum: c349d308bfa22c83aacfacb26f7de5374a30608d039e34f05762cdb3b55a5247004af5b3d56137015552b7a0946a4b5b200120a8eda006e9dc16ed00669b7c26
+  languageName: node
+  linkType: hard
+
 "babel-plugin-syntax-hermes-parser@npm:0.25.1":
   version: 0.25.1
   resolution: "babel-plugin-syntax-hermes-parser@npm:0.25.1"
@@ -4143,8 +4152,9 @@ __metadata:
     "@types/react-test-renderer": ^19.0.0
     axios: ^1.8.4
     babel-plugin-module-resolver: ^5.0.2
+    babel-plugin-react-compiler: rc
     eslint: ^8.19.0
-    haversine: ^1.1.1
+    eslint-plugin-react-hooks: ^6.0.0-rc.1
     jest: ^29.6.3
     prettier: 2.8.8
     react: 19.0.0
@@ -5255,6 +5265,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-react-hooks@npm:^6.0.0-rc.1":
+  version: 6.0.0-rc1
+  resolution: "eslint-plugin-react-hooks@npm:6.0.0-rc1"
+  dependencies:
+    "@babel/core": ^7.24.4
+    "@babel/parser": ^7.24.4
+    "@babel/plugin-transform-private-methods": ^7.24.4
+    hermes-parser: ^0.25.1
+    zod: ^3.22.4
+    zod-validation-error: ^3.0.3
+  peerDependencies:
+    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
+  checksum: 5f99c16525488b85e6c9ff346533915c8662249919f1b5c06f3ddf3f7ae24b1544c177dfa0f3b0be8395e2f34d64298b65a7789ea8c2df2e3ce1e3ce51e2c16f
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react-native-globals@npm:^0.1.1":
   version: 0.1.2
   resolution: "eslint-plugin-react-native-globals@npm:0.1.2"
@@ -6135,13 +6161,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"haversine@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "haversine@npm:1.1.1"
-  checksum: 0d635e4da5bdd21c74ca92bb1bd44d6f8c6ca2166447fdbc33bb51469172c2326b103588a942767820602e3ba72d0a780b7180b042fac36381186bbc54316fcb
-  languageName: node
-  linkType: hard
-
 "hermes-estree@npm:0.23.1":
   version: 0.23.1
   resolution: "hermes-estree@npm:0.23.1"
@@ -6165,7 +6184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-parser@npm:0.25.1":
+"hermes-parser@npm:0.25.1, hermes-parser@npm:^0.25.1":
   version: 0.25.1
   resolution: "hermes-parser@npm:0.25.1"
   dependencies:
@@ -11584,5 +11603,21 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod-validation-error@npm:^3.0.3":
+  version: 3.4.0
+  resolution: "zod-validation-error@npm:3.4.0"
+  peerDependencies:
+    zod: ^3.18.0
+  checksum: b07fbfc39582dbdf6972f5f5f0c3bac9e6b5e6d2e55ef3dd891fd08f1966ebf1023a4bc270e9b569eaa48ed1684ac2252c9f260b0bd07b167671596e6e4d0fa8
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4":
+  version: 3.24.3
+  resolution: "zod@npm:3.24.3"
+  checksum: 9c3976e61cec25908f3405502abdf28ab1893afd5182c6739a30375c5c6bf4b9b6ea7e78735324e5ac63571c160ce607ebe320ff389b044223c357ccc2f8c94c
   languageName: node
   linkType: hard
